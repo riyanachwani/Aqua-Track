@@ -9,17 +9,16 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      themeMode: ThemeMode.light,
+      debugShowCheckedModeBanner: false,
       initialRoute: MyRoutes.splashRoute,
       routes: {
         '/': (context) => SplashScreen(),
         MyRoutes.splashRoute: (context) => const SplashScreen(),
         MyRoutes.landingRoute: (context) => const LandingPage(),
-
       },
     );
   }
