@@ -1,7 +1,7 @@
 import 'package:aquatrack/utils/color_codes.dart';
 import 'package:aquatrack/utils/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 1000), () async {
+    Future.delayed(Duration(milliseconds: 5000), () async {
       Navigator.pushNamedAndRemoveUntil(
         context,
         MyRoutes.landingRoute,
@@ -29,11 +29,9 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: ColorCodes.mainColor,
       body: Center(
         child: Container(
-          child: SvgPicture.asset(
-              'assets/images/completelogo.svg',
-          width: 100,
-          height: 100,
-          alignment: Alignment.center,
+          child: Image.asset(
+            'assets/images/applogo.png',
+            alignment: Alignment.center,
           ),
         ),
       ),
