@@ -1,4 +1,4 @@
-class Routes {
+class MyRoutes {
   static String SplashRoute = '/splash';
   static String LandingRoute = '/landing';
   static String SignupRoute = '/signup';

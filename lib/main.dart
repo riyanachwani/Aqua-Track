@@ -1,3 +1,5 @@
+import 'package:aquatrack/onboarding/splash_screen.dart';
+import 'package:aquatrack/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,6 +13,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: MyRoutes.SplashRoute,
+      routes: {
+        '/': (context) => SplashScreen(),
+        MyRoutes.SplashRoute: (context) => const SplashScreen(),
+      },
     );
   }
 }
