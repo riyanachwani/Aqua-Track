@@ -1,11 +1,11 @@
 class MyRoutes {
-  static String SplashRoute = '/splash';
-  static String LandingRoute = '/landing';
-  static String SignupRoute = '/signup';
-  static String LoginRoute = '/login';
-  static String DashboardRoute = '/dashboard';
-  static String PersonalInfoRoute = '/personalInfo';
-  static String SleepScheduleRoute = '/sleepSchedule';
-  static String ForgotPasswordRoute = '/forgotPassword';
-  static String SettingsRoute = '/settings';
+  static String splashRoute = '/splash';
+  static String landingRoute = '/landing';
+  static String signupRoute = '/signup';
+  static String loginRoute = '/login';
+  static String dashboardRoute = '/dashboard';
+  static String personalInfoRoute = '/personalInfo';
+  static String sleepScheduleRoute = '/sleepSchedule';
+  static String forgotPasswordRoute = '/forgotPassword';
+  static String settingsRoute = '/settings';
 }
