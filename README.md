@@ -1,16 +1,35 @@
-# aquatrack
+<h1 align="center">
+  <a href="# AquaTrack"></a>
+   AquaTrack💧
+</h1>
 
-A new Flutter project.
+## `Project Title`
+AquaTrack
 
-## Getting Started
+## `Description`
+AquaTrack is a smart hydration app designed to help you maintain optimal water intake with personalized reminders and easy tracking. The app provides a seamless experience for setting hydration goals, managing daily water intake, and receiving timely notifications to stay hydrated. With intuitive features and a user-friendly interface, AquaTrack makes keeping up with your hydration needs effortless.
 
-This project is a starting point for a Flutter application.
+## `Features`
+- **Personalized Reminders:** Get timely notifications to remind you to drink water throughout the day.
+- **Hydration Tracking:** Monitor your daily water intake and track your progress towards hydration goals.
+- **Customizable Hydration Plans:** Set up a personalized hydration plan based on your preferences and needs.
+- **User Profile Management:** View and update your profile information, including daily drinking goals and personal details.
+- **Notifications:** Receive alerts to help you stay on track with your hydration goals.
 
-A few resources to get you started if this is your first Flutter project:
+## `Prerequisites`
+Ensure you have:
+- A smartphone or tablet device
+- Internet connectivity for notifications and updates
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## `Tech Stack Used`
+- Flutter (+Dart)
+- Firebase
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## `Installation`
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/riyanachwani/AquaTrack.git
+   ```
+2. **Open the Project Folder:** Launch the project in your preferred IDE.
+3. **Run the Project:** Execute the project in your IDE to start the application.
+ter intake goals effortlessly. write this for aquatrack
