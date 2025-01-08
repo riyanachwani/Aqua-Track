@@ -1,3 +1,4 @@
+import 'package:aquatrack/auth/signup.dart';
 import 'package:aquatrack/onboarding/landing.dart';
 import 'package:aquatrack/onboarding/splash_screen.dart';
 import 'package:aquatrack/utils/routes.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => SplashScreen(),
         MyRoutes.splashRoute: (context) => const SplashScreen(),
         MyRoutes.landingRoute: (context) => const LandingPage(),
+        MyRoutes.signupRoute: (context) => const SignupPage(),
       },
     );
   }
