@@ -1,5 +1,6 @@
 import 'package:aquatrack/auth/login.dart';
 import 'package:aquatrack/auth/signup.dart';
+import 'package:aquatrack/firebase_options.dart';
 import 'package:aquatrack/onboarding/landing.dart';
 import 'package:aquatrack/onboarding/splash_screen.dart';
 import 'package:aquatrack/utils/routes.dart';
@@ -10,7 +11,9 @@ import 'package:provider/provider.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+     options: DefaultFirebaseOptions.currentPlatform
+  );
   runApp(const MyApp());
 }
 
