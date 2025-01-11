@@ -1,12 +1,16 @@
+import 'package:aquatrack/auth/login.dart';
 import 'package:aquatrack/auth/signup.dart';
 import 'package:aquatrack/onboarding/landing.dart';
 import 'package:aquatrack/onboarding/splash_screen.dart';
 import 'package:aquatrack/utils/routes.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -36,6 +40,8 @@ class MyApp extends StatelessWidget {
               MyRoutes.splashRoute: (context) => const SplashScreen(),
               MyRoutes.landingRoute: (context) => const LandingPage(),
               MyRoutes.signupRoute: (context) => const SignupPage(),
+              MyRoutes.loginRoute: (context) => const LoginPage(),
+
             },
           );
         }));
