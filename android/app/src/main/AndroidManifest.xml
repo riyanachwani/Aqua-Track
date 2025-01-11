@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="aquatrack"
-        android:name="AquaTrack"
-        android:icon="@drawable/logo.jpg">
+        android:label="AquaTrack"
+        android:name="${applicationName}"
+        android:icon="@drawable/logo">
         <activity
             android:name=".MainActivity"
             android:exported="true"

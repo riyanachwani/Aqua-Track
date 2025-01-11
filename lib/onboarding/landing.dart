@@ -11,14 +11,14 @@ class LandingPage extends StatelessWidget {
         children: [
           // Background Image
           Image.asset(
-            "assets/images/bg.jpg", // Replace with your image path
+            "assets/images/bg1.jpg", // Replace with your image path
             width: double.infinity,
             height: double.infinity,
             fit: BoxFit.cover, // Ensures the image covers the entire screen
           ),
           // Foreground Content
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Text Section
@@ -81,6 +81,7 @@ class LandingPage extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(height: 140),
             ],
           ),
         ],
