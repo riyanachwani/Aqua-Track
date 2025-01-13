@@ -12,7 +12,12 @@
           "package_name": "com.example.aquatrack"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1024586150537-mrkj4catq76jevtq7i50fk6mbomark70.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAYEJ9crLy5GoE9hnPmRbRKDWukw761NK0"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1024586150537-mrkj4catq76jevtq7i50fk6mbomark70.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1024586150537-f8k759lkimge2dbb41ct20ruqtlddj5s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.aquatrack"
+              }
+            }
+          ]
         }
       }
     }
