@@ -33,13 +33,11 @@ class _SignupPageState extends State<SignupPage> {
       ),
       body: Stack(
         children: [
-          // Background Image
-          Positioned.fill(
-            child: Image.asset(
-              "assets/images/bg2.jpg",
-              fit: BoxFit.cover, // Ensures the image covers the entire screen
-            ),
-          ),
+          Image.asset('assets/images/bg2.jpg',
+              width: double.infinity,
+              height: double.infinity,
+              fit: BoxFit.cover),
+
           // Content on top of the background
           SingleChildScrollView(
             child: SafeArea(
@@ -189,7 +187,7 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: size.height * 0.03),
+                      SizedBox(height: size.height * 0.05),
                       Align(
                         alignment: Alignment.center,
                         child: RichText(
