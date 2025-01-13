@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:aquatrack/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:developer';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -20,6 +24,93 @@ class _SignupPageState extends State<SignupPage> {
   final _nameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isLoggedIn = false;
+
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+      if (_isLoggedIn) {
+        Navigator.pushReplacementNamed(context, MyRoutes.dashboardRoute);
+      }
+    });
+  }
+
+  Future<void> _saveLoginStatus(bool _isLoggedIn) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('_isLoggedIn', _isLoggedIn);
+  }
+
+  void _showAlertDialog(String message) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text('Error in Signing Up'),
+              content: Text(
+                message,
+                style: TextStyle(fontSize: 16),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.pop(context), child: Text("OK"))
+              ],
+            ));
+  }
+
+  void moveToDashboard(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        User? user = await SignInWithEmail(
+          name: _nameController.text,
+          email: _emailController.text,
+          password: _passwordController.text,
+          context: context,
+        );
+        if (user != null) {
+          await _saveLoginStatus(true);
+          Navigator.pushReplacementNamed(context, MyRoutes.dashboardRoute);
+        } else {
+          _showAlertDialog("Error in Signing up. Try Again");
+        }
+      } catch (e) {
+        log("Error $e");
+      }
+    }
+  }
+
+  static Future<User?> SignInWithEmail(
+      {required String name,
+      required String email,
+      required String password,
+      required BuildContext context}) async {
+    FirebaseAuth auth = await FirebaseAuth.instance;
+    try {
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      String userId = userCredential.user!.uid;
+      await FirebaseFirestore.instance.collection('users').doc(userId).set({
+        'Name': name,
+        'Email': email,
+      });
+      return userCredential.user;
+    } on FirebaseException catch (e) {
+      if (e.code == 'weak-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('The password provided is too weak.')));
+        {}
+      } else if (e.code == 'email-already-in-use') {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('The account already exists for that email.')));
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.code)));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

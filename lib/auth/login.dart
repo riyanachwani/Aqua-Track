@@ -1,8 +1,11 @@
 import 'package:aquatrack/main.dart';
 import 'package:aquatrack/utils/routes.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -19,6 +22,100 @@ class _LoginPageState extends State<LoginPage> {
   final _nameController = TextEditingController();
   bool _isLoggedIn = false;
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  Future<void> _saveLoginStatus(bool isLoggedIn) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', isLoggedIn);
+  }
+
+  Future<void> _checkLoginStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    });
+    if (_isLoggedIn) {
+      Navigator.pushReplacementNamed(context, MyRoutes.dashboardRoute);
+    }
+  }
+
+  void _showAlertDialog(String message) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text("Error in registration"),
+              content: Text(message, style: TextStyle(fontSize: 16)),
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text("OK"))
+              ],
+            ));
+  }
+
+  void moveToDashboard(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        User? user = await signInWithEmail(
+          name: _nameController.text,
+          email: _emailController.text,
+          password: _passwordController.text,
+          context: context,
+        );
+        if (user != null) {
+          await _saveLoginStatus(true);
+          Navigator.pushReplacementNamed(context, MyRoutes.dashboardRoute);
+        } else {
+          _showAlertDialog("Error in Signing In. Try Again");
+        }
+      } catch (e) {
+        print("Error $e");
+      }
+    }
+  }
+
+  static Future<User?> signInWithEmail({
+    required String name,
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    try {
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+// Get the newly created user's ID
+      String userId = userCredential.user!.uid;
+
+      // Create a new document in the 'users' collection with the user's ID
+      await FirebaseFirestore.instance.collection('users').doc(userId).set({
+        'Name': name,
+        'Email': email,
+      });
+
+      return userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print("No user found for that email.");
+      } else if (e.code == 'wrong-password') {
+        print("Wrong password provided for that user.");
+      } else {
+        print("Error signing in. Check the email and password again.");
+      }
+      return null;
+    } catch (e) {
+      print("Error $e");
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
