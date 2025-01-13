@@ -24,8 +24,7 @@ Ensure you have:
 
 ## `Tech Stack Used`
 - Flutter (+Dart)
-- Firebase for authentication and database
-- Notifications for daily hydration reminders
+- Firebase
 
 ## `Installation`
 1. **Clone the Repository:**
