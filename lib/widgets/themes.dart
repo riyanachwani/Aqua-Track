@@ -9,16 +9,18 @@ class MyTheme {
         foregroundColor: Colors.black,
         iconTheme: IconThemeData(color: Colors.black),
         elevation: 0.0,
-        color: Color(0xFF87CEEB),
+        color: Color(0xFF577b94),
       ));
 
   static ThemeData darkTheme(BuildContext context) => ThemeData(
-  brightness: Brightness.dark,
-  fontFamily: GoogleFonts.arOneSans().fontFamily,
-  appBarTheme: AppBarTheme(
-    foregroundColor: Colors.white,
-    iconTheme: IconThemeData(color: Colors.white,),
-    elevation: 0.0,
-    color: Colors.black,
-  ));
+      brightness: Brightness.dark,
+      fontFamily: GoogleFonts.arOneSans().fontFamily,
+      appBarTheme: AppBarTheme(
+        foregroundColor: Colors.white,
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
+        elevation: 0.0,
+        color: Colors.black,
+      ));
 }

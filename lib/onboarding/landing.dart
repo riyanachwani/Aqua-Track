@@ -11,7 +11,7 @@ class LandingPage extends StatelessWidget {
         children: [
           // Background Image
           Image.asset(
-            "assets/images/bg.jpg", // Replace with your image path
+            "assets/images/bg2.jpg", // Replace with your image path
             width: double.infinity,
             height: double.infinity,
             fit: BoxFit.cover, // Ensures the image covers the entire screen
