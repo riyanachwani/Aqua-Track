@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -117,6 +118,45 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  Future<void> GoogleRegister() async {
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+
+      // Sign out of any existing session to ensure we start fresh
+      await googleSignIn.signOut();
+
+      // Proceed with sign in and account picker
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        final UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithCredential(credential);
+        User? user = userCredential.user;
+
+        if (user != null) {
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .set({
+            'Name': user.displayName ?? "",
+            'Email': user.email ?? "",
+          });
+          await _saveLoginStatus(true); // Save login status
+          Navigator.pushReplacementNamed(context, MyRoutes.dashboardRoute);
+        }
+      }
+    } catch (e) {
+      print("Error during Google Sign-In: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -186,7 +226,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           child: InkWell(
                             onTap: () {
-                              //moveToDashboard(context);
+                              moveToDashboard(context);
                             },
                             borderRadius: BorderRadius.circular(15),
                             splashColor: Colors.black,
@@ -241,7 +281,7 @@ class _LoginPageState extends State<LoginPage> {
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         child: GestureDetector(
                           onTap: () {
-                            //GoogleRegister();
+                            GoogleRegister();
                           },
                           child: Container(
                             height: size.height * 0.06,

@@ -112,6 +112,41 @@ class _SignupPageState extends State<SignupPage> {
     }
   }
 
+  Future<void> GoogleRegister() async {
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      await googleSignIn.signOut();
+
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        final UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithCredential(credential);
+        User? user = userCredential.user;
+
+        if (user != null) {
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .set({
+            'Name': user.displayName ?? "",
+            'Email': user.email ?? "",
+          });
+          await _saveLoginStatus(true);
+          Navigator.pushReplacementNamed(context, MyRoutes.dashboardRoute);
+        }
+      }
+    } catch (e) {
+      log("Error during Google Sign-In: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -184,7 +219,7 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                           child: InkWell(
                             onTap: () {
-                              //moveToDashboard(context);
+                              moveToDashboard(context);
                             },
                             borderRadius: BorderRadius.circular(15),
                             splashColor: Colors.black,
@@ -239,7 +274,7 @@ class _SignupPageState extends State<SignupPage> {
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         child: GestureDetector(
                           onTap: () {
-                            //GoogleRegister();
+                            GoogleRegister();
                           },
                           child: Container(
                             height: size.height * 0.06,
