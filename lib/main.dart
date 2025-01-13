@@ -4,16 +4,14 @@ import 'package:aquatrack/firebase_options.dart';
 import 'package:aquatrack/onboarding/landing.dart';
 import 'package:aquatrack/onboarding/splash_screen.dart';
 import 'package:aquatrack/utils/routes.dart';
+import 'package:aquatrack/widgets/themes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-     options: DefaultFirebaseOptions.currentPlatform
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -35,7 +33,9 @@ class MyApp extends StatelessWidget {
         create: (_) => ThemeModel(),
         child: Consumer<ThemeModel>(builder: (context, themeModel, child) {
           return MaterialApp(
-            themeMode: ThemeMode.light,
+            theme: MyTheme.lightTheme(context), // Use custom light theme
+            darkTheme: MyTheme.darkTheme(context), // Use custom dark theme
+            themeMode: themeModel.mode,
             debugShowCheckedModeBanner: false,
             initialRoute: MyRoutes.splashRoute,
             routes: {
@@ -44,7 +44,6 @@ class MyApp extends StatelessWidget {
               MyRoutes.landingRoute: (context) => const LandingPage(),
               MyRoutes.signupRoute: (context) => const SignupPage(),
               MyRoutes.loginRoute: (context) => const LoginPage(),
-
             },
           );
         }));
