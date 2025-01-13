@@ -83,7 +83,7 @@ class _SignupPageState extends State<SignupPage> {
                           width: size.width,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: Color(0xFF8fa7b9),
+                            color: Color(0xFF87CEEB),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black12.withOpacity(0.05),

@@ -20,7 +20,7 @@ class LandingPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 150.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Text Section

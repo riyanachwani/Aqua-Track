@@ -9,7 +9,7 @@ class MyTheme {
         foregroundColor: Colors.black,
         iconTheme: IconThemeData(color: Colors.black),
         elevation: 0.0,
-        color: Color(0xFF577b94),
+        color: Color(0xFF87CEEB),
       ));
 
   static ThemeData darkTheme(BuildContext context) => ThemeData(
