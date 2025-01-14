@@ -35,7 +35,7 @@ class _SignupPageState extends State<SignupPage> {
     setState(() {
       _isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
       if (_isLoggedIn) {
-        Navigator.pushReplacementNamed(context, MyRoutes.dashboardRoute);
+        Navigator.pushReplacementNamed(context, MyRoutes.personalInfoRoute);
       }
     });
   }
@@ -61,7 +61,7 @@ class _SignupPageState extends State<SignupPage> {
             ));
   }
 
-  void moveToDashboard(BuildContext context) async {
+  void moveToPersonalInfo(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       try {
         User? user = await SignInWithEmail(
@@ -72,7 +72,8 @@ class _SignupPageState extends State<SignupPage> {
         );
         if (user != null) {
           await _saveLoginStatus(true);
-          Navigator.pushReplacementNamed(context, MyRoutes.dashboardRoute);
+          Navigator.pushReplacementNamed(context, MyRoutes.personalInfoRoute);
+          print("Is logged in: $_isLoggedIn");
         } else {
           _showAlertDialog("Error in Signing up. Try Again");
         }
@@ -139,7 +140,7 @@ class _SignupPageState extends State<SignupPage> {
             'Email': user.email ?? "",
           });
           await _saveLoginStatus(true);
-          Navigator.pushReplacementNamed(context, MyRoutes.dashboardRoute);
+          Navigator.pushReplacementNamed(context, MyRoutes.personalInfoRoute);
         }
       }
     } catch (e) {
@@ -219,7 +220,7 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                           child: InkWell(
                             onTap: () {
-                              moveToDashboard(context);
+                              moveToPersonalInfo(context);
                             },
                             borderRadius: BorderRadius.circular(15),
                             splashColor: Colors.black,
@@ -375,6 +376,10 @@ class _SignupPageState extends State<SignupPage> {
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           fillColor: Colors.white,
           filled: true,
+          errorStyle: TextStyle(
+            fontSize: 15, // Increase this value to increase the error text size
+            color: Colors.red[100], // Change the color if needed
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide.none,
@@ -407,6 +412,10 @@ class _SignupPageState extends State<SignupPage> {
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           fillColor: Colors.white,
           filled: true,
+          errorStyle: TextStyle(
+            fontSize: 15, // Increase this value to increase the error text size
+            color: Colors.red[100], // Change the color if needed
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide.none,

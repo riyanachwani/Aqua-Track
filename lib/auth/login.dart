@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
       _isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
     });
     if (_isLoggedIn) {
-      Navigator.pushReplacementNamed(context, MyRoutes.dashboardRoute);
+      Navigator.pushReplacementNamed(context, MyRoutes.personalInfoRoute);
     }
   }
 
@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
             ));
   }
 
-  void moveToDashboard(BuildContext context) async {
+  void moveToPersonalInfo(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       try {
         User? user = await signInWithEmail(
@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
         );
         if (user != null) {
           await _saveLoginStatus(true);
-          Navigator.pushReplacementNamed(context, MyRoutes.dashboardRoute);
+          Navigator.pushReplacementNamed(context, MyRoutes.personalInfoRoute);
         } else {
           _showAlertDialog("Error in Signing In. Try Again");
         }
@@ -149,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
             'Email': user.email ?? "",
           });
           await _saveLoginStatus(true); // Save login status
-          Navigator.pushReplacementNamed(context, MyRoutes.dashboardRoute);
+          Navigator.pushReplacementNamed(context, MyRoutes.personalInfoRoute);
         }
       }
     } catch (e) {
@@ -226,7 +226,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           child: InkWell(
                             onTap: () {
-                              moveToDashboard(context);
+                              moveToPersonalInfo(context);
                             },
                             borderRadius: BorderRadius.circular(15),
                             splashColor: Colors.black,
@@ -381,6 +381,10 @@ class _LoginPageState extends State<LoginPage> {
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           fillColor: Colors.white,
           filled: true,
+          errorStyle: TextStyle(
+            fontSize: 15, // Increase this value to increase the error text size
+            color: Colors.red[100], // Change the color if needed
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide.none,
@@ -413,6 +417,10 @@ class _LoginPageState extends State<LoginPage> {
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           fillColor: Colors.white,
           filled: true,
+          errorStyle: TextStyle(
+            fontSize: 15, // Increase this value to increase the error text size
+            color: Colors.red[100], // Change the color if needed
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide.none,

@@ -4,6 +4,7 @@ import 'package:aquatrack/dashboard/dashboard.dart';
 import 'package:aquatrack/firebase_options.dart';
 import 'package:aquatrack/onboarding/landing.dart';
 import 'package:aquatrack/onboarding/splash_screen.dart';
+import 'package:aquatrack/user_info/personal_info.dart';
 import 'package:aquatrack/utils/routes.dart';
 import 'package:aquatrack/widgets/themes.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -45,6 +46,8 @@ class MyApp extends StatelessWidget {
               MyRoutes.landingRoute: (context) => const LandingPage(),
               MyRoutes.signupRoute: (context) => const SignupPage(),
               MyRoutes.loginRoute: (context) => const LoginPage(),
+              MyRoutes.dashboardRoute: (context) => const DashboardPage(),
+              MyRoutes.personalInfoRoute: (context) => const PersonalInfoPage(),
               MyRoutes.dashboardRoute: (context) => const DashboardPage(),
 
             },

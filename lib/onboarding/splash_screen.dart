@@ -1,7 +1,5 @@
-import 'package:aquatrack/utils/color_codes.dart';
 import 'package:aquatrack/utils/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
