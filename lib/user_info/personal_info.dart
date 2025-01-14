@@ -10,6 +10,14 @@ class PersonalInfoPage extends StatefulWidget {
 class _PersonalInfoPageState extends State<PersonalInfoPage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+        body: SingleChildScrollView(
+      child: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: EdgeInsets.all(10),
+        ),
+      ),
+    ));
   }
 }

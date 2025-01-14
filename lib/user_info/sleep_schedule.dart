@@ -10,6 +10,6 @@ class SleepSchedulePage extends StatefulWidget {
 class _SleepSchedulePageState extends State<SleepSchedulePage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Material();
   }
 }
