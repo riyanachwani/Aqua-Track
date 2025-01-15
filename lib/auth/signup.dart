@@ -33,7 +33,7 @@ class _SignupPageState extends State<SignupPage> {
   Future<void> _checkLoginStatus() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+      _isLoggedIn = prefs.getBool('_isLoggedIn') ?? false;
       if (_isLoggedIn) {
         Navigator.pushReplacementNamed(context, MyRoutes.personalInfoRoute);
       }

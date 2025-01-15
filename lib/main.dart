@@ -30,32 +30,8 @@ class ThemeModel extends ChangeNotifier {
   }
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  bool _isLoggedIn = false;
-  @override
-  void initState() {
-    super.initState();
-    _checkLoginStatus();
-  }
-
-  Future<void> _checkLoginStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-      log("Login status: ${_isLoggedIn}");
-
-      if (_isLoggedIn) {
-        Navigator.pushReplacementNamed(context, MyRoutes.personalInfoRoute);
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
