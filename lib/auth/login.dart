@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
       _isLoggedIn = prefs.getBool('_isLoggedIn') ?? false;
     });
     if (_isLoggedIn) {
-      Navigator.pushReplacementNamed(context, MyRoutes.personalInfoRoute);
+      Navigator.pushReplacementNamed(context, MyRoutes.profileSetupRoute);
     }
   }
 
@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
         );
         if (user != null) {
           await _saveLoginStatus(true);
-          Navigator.pushReplacementNamed(context, MyRoutes.personalInfoRoute);
+          Navigator.pushReplacementNamed(context, MyRoutes.profileSetupRoute);
         } else {
           _showAlertDialog("Error in Signing In. Try Again");
         }
@@ -149,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
             'Email': user.email ?? "",
           });
           await _saveLoginStatus(true); // Save login status
-          Navigator.pushReplacementNamed(context, MyRoutes.personalInfoRoute);
+          Navigator.pushReplacementNamed(context, MyRoutes.profileSetupRoute);
         }
       }
     } catch (e) {

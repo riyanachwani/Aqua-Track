@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
       log("Login status: $_isLoggedIn");
 
       if (_isLoggedIn) {
-        Navigator.pushReplacementNamed(context, MyRoutes.personalInfoRoute);
+        Navigator.pushReplacementNamed(context, MyRoutes.profileSetupRoute);
       } else {
         Navigator.pushReplacementNamed(context, MyRoutes.landingRoute);
       }
@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 2000), () {
+    Future.delayed(Duration(milliseconds: 1500), () {
       _checkLoginStatus();
     });
   }

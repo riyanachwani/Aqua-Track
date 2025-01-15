@@ -35,7 +35,7 @@ class _SignupPageState extends State<SignupPage> {
     setState(() {
       _isLoggedIn = prefs.getBool('_isLoggedIn') ?? false;
       if (_isLoggedIn) {
-        Navigator.pushReplacementNamed(context, MyRoutes.personalInfoRoute);
+        Navigator.pushReplacementNamed(context, MyRoutes.profileSetupRoute);
       }
     });
   }
@@ -72,7 +72,7 @@ class _SignupPageState extends State<SignupPage> {
         );
         if (user != null) {
           await _saveLoginStatus(true);
-          Navigator.pushReplacementNamed(context, MyRoutes.personalInfoRoute);
+          Navigator.pushReplacementNamed(context, MyRoutes.profileSetupRoute);
           print("Is logged in: $_isLoggedIn");
         } else {
           _showAlertDialog("Error in Signing up. Try Again");
@@ -140,7 +140,7 @@ class _SignupPageState extends State<SignupPage> {
             'Email': user.email ?? "",
           });
           await _saveLoginStatus(true);
-          Navigator.pushReplacementNamed(context, MyRoutes.personalInfoRoute);
+          Navigator.pushReplacementNamed(context, MyRoutes.profileSetupRoute);
         }
       }
     } catch (e) {
@@ -211,7 +211,7 @@ class _SignupPageState extends State<SignupPage> {
                             color: Color(0xFF87CEEB),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black12.withOpacity(0.05),
+                                color: Colors.black12,
                                 spreadRadius: 1,
                                 blurRadius: 1,
                                 offset: Offset(0, -1),
