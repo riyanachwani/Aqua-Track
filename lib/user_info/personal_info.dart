@@ -39,35 +39,32 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                   Column(
                     children: [
                       SizedBox(height: 25),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0xFF87CEEB),
-                                blurRadius: 20,
-                                offset: Offset(0, 10),
-                              )
-                            ]),
-                        child: TextFormField(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Please enter your Name";
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide.none,
-                            ),
-                            labelText: "Name",
-                            hintText: "Name",
+                      TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter your Name";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          labelText: "Name",
+                          hintText: "Name",
+                          
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide.none,
                           ),
+                          filled: true,
+                          fillColor: Colors
+                              .white, 
+                          
+                          errorStyle: TextStyle(height: 0),
+                          
                         ),
+                        style:
+                            TextStyle(fontSize: 16), 
                       ),
                       SizedBox(height: 30),
                       Container(
