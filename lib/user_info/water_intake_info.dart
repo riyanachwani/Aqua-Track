@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class WaterIntakeInfoPage extends StatefulWidget {
-  const WaterIntakeInfoPage({super.key});
+  final GlobalKey<FormState> formKey;
+
+  const WaterIntakeInfoPage({super.key, required this.formKey});
 
   @override
   State<WaterIntakeInfoPage> createState() => _WaterIntakeInfoPageState();

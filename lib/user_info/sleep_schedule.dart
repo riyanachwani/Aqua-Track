@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SleepSchedulePage extends StatefulWidget {
-  const SleepSchedulePage({super.key});
+  final GlobalKey<FormState> formKey;
+
+  const SleepSchedulePage({super.key, required this.formKey});
 
   @override
   State<SleepSchedulePage> createState() => _SleepSchedulePageState();

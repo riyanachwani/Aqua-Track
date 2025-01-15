@@ -4,10 +4,10 @@ import 'package:aquatrack/dashboard/dashboard.dart';
 import 'package:aquatrack/firebase_options.dart';
 import 'package:aquatrack/onboarding/landing.dart';
 import 'package:aquatrack/onboarding/splash_screen.dart';
-import 'package:aquatrack/user_info/personal_info.dart';
 import 'package:aquatrack/user_info/profile_setup.dart';
-import 'package:aquatrack/user_info/sleep_schedule.dart';
 import 'package:aquatrack/user_info/water_intake_info.dart';
+import 'package:aquatrack/user_info/sleep_schedule.dart';
+import 'package:aquatrack/user_info/personal_info.dart';
 import 'package:aquatrack/utils/routes.dart';
 import 'package:aquatrack/widgets/themes.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -51,12 +51,14 @@ class MyApp extends StatelessWidget {
               MyRoutes.signupRoute: (context) => const SignupPage(),
               MyRoutes.loginRoute: (context) => const LoginPage(),
               MyRoutes.dashboardRoute: (context) => const DashboardPage(),
-              MyRoutes.personalInfoRoute: (context) => const PersonalInfoPage(),
-              MyRoutes.sleepScheduleRoute: (context) => const SleepSchedulePage(),
-              MyRoutes.waterIntakeInfoRoute: (context) => const WaterIntakeInfoPage(),
+              MyRoutes.personalInfoRoute: (context) =>
+                  PersonalInfoPage(formKey: GlobalKey<FormState>()),
+              MyRoutes.sleepScheduleRoute: (context) =>
+                  SleepSchedulePage(formKey: GlobalKey<FormState>()),
+              MyRoutes.waterIntakeInfoRoute: (context) =>
+                  WaterIntakeInfoPage(formKey: GlobalKey<FormState>()),
               MyRoutes.dashboardRoute: (context) => const DashboardPage(),
               MyRoutes.profileSetupRoute: (context) => const ProfileSetupPage(),
-
             },
           );
         }));
