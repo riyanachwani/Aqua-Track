@@ -10,4 +10,5 @@ class MyRoutes {
   static String settingsRoute = '/settings';
   static String waterIntakeInfoRoute = '/waterIntakeInfo';
   static String profileSetupRoute = '/profileSetup';
+
 }
