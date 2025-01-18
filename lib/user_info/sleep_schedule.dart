@@ -1,21 +1,41 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+int selectedWakeUpHour = 6; // Default wake-up hour
+int selectedWakeUpMinute = 30; // Default wake-up minute
+int selectedBedTimeHour = 22; // Default bedtime hour
+int selectedBedTimeMinute = 0; // Default bedtime minute
 
 class SleepSchedulePage extends StatefulWidget {
   final GlobalKey<FormState> formKey;
 
   const SleepSchedulePage({super.key, required this.formKey});
+  Future<void> saveTimeSelected() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+
+    if (user != null) {
+      // Save wake-up and bedtime time to Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .update({
+        'Wake-up Time':
+            '${selectedWakeUpHour.toString().padLeft(2, '0')}:${selectedWakeUpMinute.toString().padLeft(2, '0')}',
+        'Bed Time':
+            '${selectedBedTimeHour.toString().padLeft(2, '0')}:${selectedBedTimeMinute.toString().padLeft(2, '0')}',
+      });
+      print('User sleep schedule saved');
+    }
+  }
 
   @override
   State<SleepSchedulePage> createState() => _SleepSchedulePageState();
 }
 
 class _SleepSchedulePageState extends State<SleepSchedulePage> {
-  int selectedWakeUpHour = 6; // Default wake-up hour
-  int selectedWakeUpMinute = 30; // Default wake-up minute
-  int selectedBedTimeHour = 22; // Default bedtime hour
-  int selectedBedTimeMinute = 0; // Default bedtime minute
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

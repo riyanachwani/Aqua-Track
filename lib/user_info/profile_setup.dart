@@ -20,14 +20,19 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
 
   late List<Widget> _stepPages;
   late PersonalInfoPage personalInfoPage;
+  late SleepSchedulePage sleepSchedulePage;
+  late WaterIntakeInfoPage waterIntakeInfoPage;
+
   @override
   void initState() {
     super.initState();
     personalInfoPage = PersonalInfoPage(formKey: _personalInfoFormKey);
+    sleepSchedulePage = SleepSchedulePage(formKey: _sleepScheduleFormKey);
+    waterIntakeInfoPage = WaterIntakeInfoPage(formKey: _waterIntakeFormKey);
     _stepPages = [
-      SleepSchedulePage(formKey: _sleepScheduleFormKey),
       personalInfoPage,
-      WaterIntakeInfoPage(formKey: _waterIntakeFormKey),
+      sleepSchedulePage,
+      waterIntakeInfoPage,
     ];
   }
 
@@ -53,6 +58,7 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
       case 1:
         isValid = _sleepScheduleFormKey.currentState?.validate() ?? false;
         if (isValid) {
+          sleepSchedulePage.saveTimeSelected();
           setState(() {
             _currentStep++;
           });
@@ -110,7 +116,7 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.white, Color(0xFF87CEEB)],
+            colors: [Colors.white, Color(0xFF3c576c)],
             begin: Alignment.topLeft,
             end: Alignment.bottomCenter,
           ),
@@ -138,7 +144,7 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
                           height: 8,
                           decoration: BoxDecoration(
                             color: index == _currentStep
-                                ? Color(0xFF87CEEB)
+                                ? Color(0xFF3c576c)
                                 : Colors.white,
                             borderRadius: BorderRadius.circular(4),
                           ),
@@ -160,7 +166,7 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
                               color: index == _currentStep
-                                  ? Color(0xFF87CEEB)
+                                  ? Color(0xFF3c576c)
                                   : Colors.grey,
                             ),
                           ),
