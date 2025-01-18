@@ -25,8 +25,8 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
     super.initState();
     personalInfoPage = PersonalInfoPage(formKey: _personalInfoFormKey);
     _stepPages = [
-      personalInfoPage,
       SleepSchedulePage(formKey: _sleepScheduleFormKey),
+      personalInfoPage,
       WaterIntakeInfoPage(formKey: _waterIntakeFormKey),
     ];
   }
@@ -109,15 +109,15 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/bg2.jpg'), // Your image asset
-            fit: BoxFit.cover, // You can adjust the fit as per your needs
-            // gradient: LinearGradient(
-            //   colors: [Colors.white, Color(0xFF87CEEB)],
-            //   begin: Alignment.topLeft,
-            //   end: Alignment.bottomCenter,
-            // ),
+          gradient: LinearGradient(
+            colors: [Colors.white, Color(0xFF87CEEB)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomCenter,
           ),
+          // image: DecorationImage(
+          //   image: AssetImage('assets/images/bg2.jpg'),
+          //   fit: BoxFit.cover,
+          // ),
         ),
         child: Column(
           children: [
