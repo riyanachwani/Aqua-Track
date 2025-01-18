@@ -19,12 +19,13 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
   final GlobalKey<FormState> _waterIntakeFormKey = GlobalKey<FormState>();
 
   late List<Widget> _stepPages;
-
+  late PersonalInfoPage personalInfoPage;
   @override
   void initState() {
     super.initState();
+    personalInfoPage = PersonalInfoPage(formKey: _personalInfoFormKey);
     _stepPages = [
-      PersonalInfoPage(formKey: _personalInfoFormKey),
+      personalInfoPage,
       SleepSchedulePage(formKey: _sleepScheduleFormKey),
       WaterIntakeInfoPage(formKey: _waterIntakeFormKey),
     ];
@@ -41,23 +42,29 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
     switch (_currentStep) {
       case 0:
         isValid = _personalInfoFormKey.currentState?.validate() ?? false;
+        if (isValid) {
+          personalInfoPage
+              .saveUserInfo(); // Call saveUserInfo() after validation
+          setState(() {
+            _currentStep++; // Move to the next step if valid
+          });
+        }
         break;
       case 1:
         isValid = _sleepScheduleFormKey.currentState?.validate() ?? false;
+        if (isValid) {
+          setState(() {
+            _currentStep++;
+          });
+        }
         break;
       case 2:
         isValid = _waterIntakeFormKey.currentState?.validate() ?? false;
+        if (isValid) {
+          Navigator.pushNamed(
+              context, MyRoutes.dashboardRoute); // Navigate to dashboard
+        }
         break;
-    }
-
-    if (isValid) {
-      if (_currentStep < _stepPages.length - 1) {
-        setState(() {
-          _currentStep++;
-        });
-      } else {
-        Navigator.pushNamed(context, MyRoutes.dashboardRoute);
-      }
     }
   }
 
@@ -102,10 +109,14 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.white, Color(0xFF87CEEB)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomCenter,
+          image: DecorationImage(
+            image: AssetImage('assets/images/bg2.jpg'), // Your image asset
+            fit: BoxFit.cover, // You can adjust the fit as per your needs
+            // gradient: LinearGradient(
+            //   colors: [Colors.white, Color(0xFF87CEEB)],
+            //   begin: Alignment.topLeft,
+            //   end: Alignment.bottomCenter,
+            // ),
           ),
         ),
         child: Column(
@@ -128,7 +139,7 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
                           decoration: BoxDecoration(
                             color: index == _currentStep
                                 ? Color(0xFF87CEEB)
-                                : Colors.grey,
+                                : Colors.white,
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),

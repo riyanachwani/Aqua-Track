@@ -12,6 +12,9 @@ class SleepSchedulePage extends StatefulWidget {
 class _SleepSchedulePageState extends State<SleepSchedulePage> {
   @override
   Widget build(BuildContext context) {
-    return Material();
+    return SingleChildScrollView(
+      child:
+          Padding(padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50)),
+    );
   }
 }

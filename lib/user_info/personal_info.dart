@@ -1,6 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+TextEditingController heightController = TextEditingController();
+TextEditingController weightController = TextEditingController();
+TextEditingController ageController = TextEditingController();
+TextEditingController activityController = TextEditingController();
+
+String selectedGender = "Male";
 
 class PersonalInfoPage extends StatefulWidget {
   final GlobalKey<FormState> formKey;
@@ -8,15 +17,6 @@ class PersonalInfoPage extends StatefulWidget {
 
   @override
   State<PersonalInfoPage> createState() => _PersonalInfoPageState();
-}
-
-class _PersonalInfoPageState extends State<PersonalInfoPage> {
-  TextEditingController heightController = TextEditingController();
-  TextEditingController weightController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
-  TextEditingController activityController = TextEditingController();
-
-  String selectedGender = "Male";
 
   Future<void> saveUserInfo() async {
     FirebaseAuth auth = await FirebaseAuth.instance;
@@ -43,26 +43,34 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
       if (activityMinutes > 60) {
         // For users with more than 60 minutes of activity, add extra 500 ml
         waterIntake += 500;
+        log("Activity adjustment (more than 60 minutes, 500 ml added): $waterIntake");
       } else if (activityMinutes > 30) {
         // For users with 30-60 minutes of activity, add extra 300 ml
         waterIntake += 300;
+        log("Activity adjustment (30-60 minutes, 300 ml added): $waterIntake");
       }
+      log("Activity level: ${activityController.text}");
 
       FirebaseFirestore.instance.collection('users').doc(user.uid).update({
         'Age': int.parse(ageController.text),
         'Gender': selectedGender,
         'Height': double.parse(heightController.text),
         'Weight': double.parse(weightController.text),
+        'Activity': activityMinutes,
         'Recommended Water Intake': waterIntake,
+        'profileSetupComplete': true
       });
+      log('User info saved');
     }
   }
+}
 
+class _PersonalInfoPageState extends State<PersonalInfoPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 0),
+        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         child: Column(
           children: [
             SafeArea(
@@ -75,49 +83,36 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                     style: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 18,
-                      color: Colors.grey,
+                      color: Colors.white,
                       height: 1.5,
                     ),
                   ),
-                  SizedBox(height: 0),
-                  Column(
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(height: 25),
-                      TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please enter your Name";
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 15),
-                          labelText: "Name",
-                          hintText: "Name",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide.none,
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          errorStyle: TextStyle(height: 0),
+                      Text(
+                        "Gender",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
                         ),
-                        style: TextStyle(fontSize: 16),
                       ),
-                      SizedBox(height: 25),
                       DropdownButtonFormField<String>(
                         decoration: InputDecoration(
+                          errorStyle: TextStyle(
+                            fontSize: 13,
+                            color: Colors.red[100],
+                          ),
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 20, vertical: 15),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide.none,
                           ),
-                          labelText: "Gender",
                           filled: true,
                           fillColor: Colors.white,
-                          errorStyle: TextStyle(height: 0),
                         ),
                         value: selectedGender,
                         onChanged: (String? newValue) {
@@ -150,11 +145,13 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide.none,
                           ),
-                          labelText: "Age",
                           hintText: "Age",
                           filled: true,
                           fillColor: Colors.white,
-                          errorStyle: TextStyle(height: 0),
+                          errorStyle: TextStyle(
+                            fontSize: 13,
+                            color: Colors.red[100],
+                          ),
                         ),
                       ),
                       SizedBox(height: 25),
@@ -177,11 +174,13 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide.none,
                           ),
-                          labelText: "Weight(in kgs)",
                           hintText: "Weight(in kgs)",
                           filled: true,
                           fillColor: Colors.white,
-                          errorStyle: TextStyle(height: 0),
+                          errorStyle: TextStyle(
+                            fontSize: 13,
+                            color: Colors.red[100],
+                          ),
                         ),
                       ),
                       SizedBox(height: 25),
@@ -201,11 +200,13 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide.none,
                           ),
-                          labelText: "Height(in cms)",
                           hintText: "Height(in cms)",
                           filled: true,
                           fillColor: Colors.white,
-                          errorStyle: TextStyle(height: 0),
+                          errorStyle: TextStyle(
+                            fontSize: 13,
+                            color: Colors.red[100],
+                          ),
                         ),
                       ),
                       SizedBox(height: 25),
@@ -225,11 +226,13 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide.none,
                           ),
-                          labelText: "Daily Activity (in minutes)",
                           hintText: "Daily Activity (in minutes)",
                           filled: true,
                           fillColor: Colors.white,
-                          errorStyle: TextStyle(height: 0),
+                          errorStyle: TextStyle(
+                            fontSize: 13,
+                            color: Colors.red[100],
+                          ),
                         ),
                       ),
                     ],

@@ -160,11 +160,11 @@ class _LoginPageState extends State<LoginPage> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title:
-            Text('AquaTrack', style: TextStyle(fontFamily: "RosebayRegular")),
-      ),
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   title:
+      //       Text('AquaTrack', style: TextStyle(fontFamily: "RosebayRegular")),
+      // ),
       body: Stack(
         children: [
           Image.asset('assets/images/bg2.jpg',
@@ -379,8 +379,8 @@ class _LoginPageState extends State<LoginPage> {
           fillColor: Colors.white,
           filled: true,
           errorStyle: TextStyle(
-            fontSize: 15, // Increase this value to increase the error text size
-            color: Colors.red[100], // Change the color if needed
+            fontSize: 15,
+            color: Colors.red[100],
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),

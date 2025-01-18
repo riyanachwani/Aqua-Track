@@ -94,13 +94,13 @@ class _SignupPageState extends State<SignupPage> {
       await FirebaseFirestore.instance.collection('users').doc(userId).set({
         'Name': name,
         'Email': email,
+        'profileSetupComplete': false,
       });
       return userCredential.user;
     } on FirebaseException catch (e) {
       if (e.code == 'weak-password') {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('The password provided is too weak.')));
-        {}
       } else if (e.code == 'email-already-in-use') {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('The account already exists for that email.')));
@@ -150,11 +150,11 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title:
-            Text("AquaTrack", style: TextStyle(fontFamily: "RosebayRegular")),
-      ),
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   title:
+      //       Text("AquaTrack", style: TextStyle(fontFamily: "RosebayRegular")),
+      // ),
       body: Stack(
         children: [
           Image.asset('assets/images/bg2.jpg',
@@ -410,8 +410,8 @@ class _SignupPageState extends State<SignupPage> {
           fillColor: Colors.white,
           filled: true,
           errorStyle: TextStyle(
-            fontSize: 15, // Increase this value to increase the error text size
-            color: Colors.red[100], // Change the color if needed
+            fontSize: 15, 
+            color: Colors.red[100], 
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
