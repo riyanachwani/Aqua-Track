@@ -116,7 +116,7 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 65,
+                    height: 60,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -135,7 +135,7 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
                       );
                     }),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 7),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: _stepTitles.map((title) {
@@ -165,7 +165,7 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
             ),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
