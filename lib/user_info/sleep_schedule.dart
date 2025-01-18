@@ -40,7 +40,7 @@ class _SleepSchedulePageState extends State<SleepSchedulePage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 70),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 60),
         child: Form(
           key: widget.formKey,
           child: Column(
