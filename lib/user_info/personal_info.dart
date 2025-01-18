@@ -1,4 +1,3 @@
-import 'package:aquatrack/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 class PersonalInfoPage extends StatefulWidget {
@@ -51,157 +50,116 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                               horizontal: 20, vertical: 15),
                           labelText: "Name",
                           hintText: "Name",
-                          
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide.none,
                           ),
                           filled: true,
-                          fillColor: Colors
-                              .white, 
-                          
+                          fillColor: Colors.white,
                           errorStyle: TextStyle(height: 0),
-                          
                         ),
-                        style:
-                            TextStyle(fontSize: 16), 
+                        style: TextStyle(fontSize: 16),
                       ),
                       SizedBox(height: 30),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0xFF87CEEB),
-                                blurRadius: 20,
-                                offset: Offset(2, 10),
-                              )
-                            ]),
-                        child: DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide.none,
-                            ),
-                            labelText: "Gender",
+                      DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide.none,
                           ),
-                          value: selectedGender,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedGender = newValue!;
-                            });
-                          },
-                          items: <String>['Male', 'Female', 'Other']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
+                          labelText: "Gender",
+                          filled: true,
+                          fillColor: Colors.white,
+                          errorStyle: TextStyle(height: 0),
                         ),
+                        value: selectedGender,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedGender = newValue!;
+                          });
+                        },
+                        items: <String>['Male', 'Female', 'Other']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
                       ),
                       SizedBox(height: 30),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0xFF87CEEB),
-                                blurRadius: 20,
-                                offset: Offset(2, 10),
-                              )
-                            ]),
-                        child: TextFormField(
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Please enter your age";
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide.none,
-                            ),
-                            labelText: "Age",
-                            hintText: "Age",
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter your age";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide.none,
                           ),
+                          labelText: "Age",
+                          hintText: "Age",
+                          filled: true,
+                          fillColor: Colors.white,
+                          errorStyle: TextStyle(height: 0),
                         ),
                       ),
                       SizedBox(height: 30),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0xFF87CEEB),
-                                blurRadius: 20,
-                                offset: Offset(2, 10),
-                              )
-                            ]),
-                        child: TextFormField(
-                          keyboardType: TextInputType.number,
-                          controller: weightController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Please enter your weight";
-                            } else if (!RegExp(r'^\d+(\.\d+)?$')
-                                .hasMatch(value)) {
-                              return "Enter valid weight(in kgs)";
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide.none,
-                            ),
-                            labelText: "Weight(in kgs)",
-                            hintText: "Weight(in kgs)",
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        controller: weightController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter your weight";
+                          } else if (!RegExp(r'^\d+(\.\d+)?$')
+                              .hasMatch(value)) {
+                            return "Enter valid weight(in kgs)";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide.none,
                           ),
+                          labelText: "Weight(in kgs)",
+                          hintText: "Weight(in kgs)",
+                          filled: true,
+                          fillColor: Colors.white,
+                          errorStyle: TextStyle(height: 0),
                         ),
                       ),
                       SizedBox(height: 30),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0xFF87CEEB),
-                                blurRadius: 20,
-                                offset: Offset(2, 10),
-                              )
-                            ]),
-                        child: TextFormField(
-                          keyboardType: TextInputType.number,
-                          controller: heightController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Please enter your height";
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide.none,
-                            ),
-                            labelText: "Height(in cms)",
-                            hintText: "Height(in cms)",
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        controller: heightController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter your height";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide.none,
                           ),
+                          labelText: "Height(in cms)",
+                          hintText: "Height(in cms)",
+                          filled: true,
+                          fillColor: Colors.white,
+                          errorStyle: TextStyle(height: 0),
                         ),
                       ),
                       SizedBox(height: 30),

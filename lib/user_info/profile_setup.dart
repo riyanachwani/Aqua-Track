@@ -100,85 +100,94 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 65,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: List.generate(_stepTitles.length, (index) {
-                    return Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                        height: 8,
-                        decoration: BoxDecoration(
-                          color: index == _currentStep
-                              ? Color(0xFF87CEEB)
-                              : Colors.grey,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      ),
-                    );
-                  }),
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: _stepTitles.map((title) {
-                    int index = _stepTitles.indexOf(title);
-                    return Expanded(
-                      child: Center(
-                        child: Text(
-                          title,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Color(0xFF87CEEB)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 65,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: List.generate(_stepTitles.length, (index) {
+                      return Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                          height: 8,
+                          decoration: BoxDecoration(
                             color: index == _currentStep
                                 ? Color(0xFF87CEEB)
                                 : Colors.grey,
+                            borderRadius: BorderRadius.circular(4),
                           ),
                         ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: _stepPages[_currentStep], // Displays the current page
-          ),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: _styledButton(
-                    "Back",
-                    _previousStep,
-                    isDisabled: _currentStep == 0,
+                      );
+                    }),
                   ),
-                ),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: _styledButton(
-                    _currentStep == _stepPages.length - 1 ? "Finish" : "Next",
-                    _nextStep,
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: _stepTitles.map((title) {
+                      int index = _stepTitles.indexOf(title);
+                      return Expanded(
+                        child: Center(
+                          child: Text(
+                            title,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: index == _currentStep
+                                  ? Color(0xFF87CEEB)
+                                  : Colors.grey,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+            Expanded(
+              child: _stepPages[_currentStep], // Displays the current page
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: _styledButton(
+                      "Back",
+                      _previousStep,
+                      isDisabled: _currentStep == 0,
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: _styledButton(
+                      _currentStep == _stepPages.length - 1 ? "Finish" : "Next",
+                      _nextStep,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
