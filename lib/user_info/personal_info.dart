@@ -71,7 +71,6 @@ class PersonalInfoPage extends StatefulWidget {
         'Weight': double.parse(weightController.text),
         'Activity': activityMinutes,
         'Recommended Water Intake': waterIntake,
-        'profileSetupComplete': true
       });
       log('User info saved');
     }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:aquatrack/utils/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -67,8 +69,8 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
       case 2:
         isValid = _waterIntakeFormKey.currentState?.validate() ?? false;
         if (isValid) {
-          Navigator.pushNamed(
-              context, MyRoutes.dashboardRoute); // Navigate to dashboard
+          Navigator.pushNamed(context, MyRoutes.dashboardRoute);
+          log("Navigating to Dashboard");
         }
         break;
     }
