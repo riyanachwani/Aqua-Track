@@ -188,44 +188,28 @@ class _WaterIntakeInfoPageState extends State<WaterIntakeInfoPage> {
                       SizedBox(height: 10),
 
                       // Target Display
-                      Text(
-                        "${targetIntake.toStringAsFixed(0)} ml",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 35.0),
+                        child: Form(
+                          key: widget.formKey,
+                          child: TextFormField(
+                            controller: TextEditingController(
+                                text: targetIntake > 0
+                                    ? targetIntake.toStringAsFixed(0)
+                                    : "Loading..."),
+                            enabled: false,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                          ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
               ],
-            ),
-
-            SizedBox(height: 30),
-
-            // Recommended Water Intake Display
-            Center(
-              child: Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: Colors.black, width: 0.5),
-                ),
-                child: Center(
-                  child: Text(
-                    recommendedIntake > 0
-                        ? "$recommendedIntake ml"
-                        : "Loading...",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
             ),
           ],
         ),

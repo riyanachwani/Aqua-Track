@@ -67,11 +67,13 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
         }
         break;
       case 2:
-        isValid = _waterIntakeFormKey.currentState?.validate() ?? false;
+        bool isValid = _waterIntakeFormKey.currentState?.validate() ?? false;
+        log("Form valid: $isValid"); // Add this log to see the validation result
         if (isValid) {
           Navigator.pushNamed(context, MyRoutes.dashboardRoute);
           log("Navigating to Dashboard");
         }
+
         break;
     }
   }
