@@ -8,6 +8,7 @@ class MyRoutes {
   static String sleepScheduleRoute = '/sleepSchedule';
   static String forgotPasswordRoute = '/forgotPassword';
   static String settingsRoute = '/settings';
+  static String homeRoute = '/home';
   static String waterIntakeInfoRoute = '/waterIntakeInfo';
   static String profileSetupRoute = '/profileSetup';
 

@@ -2,6 +2,8 @@ import 'package:aquatrack/auth/forgot_password.dart';
 import 'package:aquatrack/auth/login.dart';
 import 'package:aquatrack/auth/signup.dart';
 import 'package:aquatrack/dashboard/dashboard.dart';
+import 'package:aquatrack/dashboard/home.dart';
+import 'package:aquatrack/dashboard/settings.dart';
 import 'package:aquatrack/firebase_options.dart';
 import 'package:aquatrack/onboarding/landing.dart';
 import 'package:aquatrack/onboarding/splash_screen.dart';
@@ -60,7 +62,10 @@ class MyApp extends StatelessWidget {
                   WaterIntakeInfoPage(formKey: GlobalKey<FormState>()),
               MyRoutes.dashboardRoute: (context) => const DashboardPage(),
               MyRoutes.profileSetupRoute: (context) => const ProfileSetupPage(),
-              MyRoutes.forgotPasswordRoute: (context) => const ForgotPasswordPage(),
+              MyRoutes.forgotPasswordRoute: (context) =>
+                  const ForgotPasswordPage(),
+              MyRoutes.homeRoute: (context) => const HomePage(),
+              MyRoutes.settingsRoute: (context) => const SettingsPage(),
             },
           );
         }));
