@@ -23,7 +23,7 @@ class _DashboardPageState extends State<DashboardPage> {
         index: _page,
         children: const [
           HomePage(),
-          HistoryPage()
+          HistoryPage(),
           SettingsPage(),
         ],
       ),
