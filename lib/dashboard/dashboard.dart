@@ -11,8 +11,8 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  int _page = 1;
-  Color _homeIconColor = Colors.grey;
+  int _page = 0; // Default to 0 for HomePage
+  Color _homeIconColor = Colors.blue[800]!; // Default home icon color
   Color _historyIconColor = Colors.grey;
   Color _settingsIconColor = Colors.grey;
 
@@ -20,7 +20,7 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
-        index: _page,
+        index: _page, // Dynamically update the page view
         children: const [
           HomePage(),
           HistoryPage(),
@@ -40,7 +40,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 onPressed: () {
                   setState(() {
                     _page = 0;
-                    _homeIconColor = Colors.blue[800]!;
+                    _homeIconColor = Colors.blue[800]!; // Highlight home icon
                     _historyIconColor = Colors.grey;
                     _settingsIconColor = Colors.grey;
                   });
@@ -68,9 +68,10 @@ class _DashboardPageState extends State<DashboardPage> {
               IconButton(
                 onPressed: () {
                   setState(() {
-                    _page = 0;
+                    _page = 1;
                     _homeIconColor = Colors.grey;
-                    _historyIconColor = Colors.blue[800]!;
+                    _historyIconColor =
+                        Colors.blue[800]!; // Highlight history icon
                     _settingsIconColor = Colors.grey;
                   });
                 },
@@ -97,10 +98,11 @@ class _DashboardPageState extends State<DashboardPage> {
               IconButton(
                 onPressed: () {
                   setState(() {
-                    _page = 1;
+                    _page = 2;
                     _homeIconColor = Colors.grey;
                     _historyIconColor = Colors.grey;
-                    _settingsIconColor = Colors.blue[800]!;
+                    _settingsIconColor =
+                        Colors.blue[800]!; // Highlight settings icon
                   });
                 },
                 icon: Container(

@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox.expand(
-        child: Image.asset(
-          "assets/images/vc44.jpg",
-          fit: BoxFit.cover,
-        ),
+      backgroundColor:
+          Color.fromARGB(255, 127, 176, 220), // Set background color here
+      body: Stack(
+        children: [
+          Positioned(
+            bottom: 60,
+            left: 0,
+            right:
+                0, // This ensures the image takes the full width of the screen
+            child: Image.asset(
+              'assets/images/vc44.png',
+              fit: BoxFit
+                  .fitWidth, // Ensures the image is resized proportionally to fit the width
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:aquatrack/auth/forgot_password.dart';
 import 'package:aquatrack/auth/login.dart';
 import 'package:aquatrack/auth/signup.dart';
+import 'package:aquatrack/dashboard/current_hydartion.dart';
 import 'package:aquatrack/dashboard/dashboard.dart';
 import 'package:aquatrack/dashboard/history.dart';
 import 'package:aquatrack/dashboard/home.dart';
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
               MyRoutes.homeRoute: (context) => const HomePage(),
               MyRoutes.settingsRoute: (context) => const SettingsPage(),
               MyRoutes.historyRoute: (context) => const HistoryPage(),
+              MyRoutes.currentHydartionRoute: (context) => const CurrentHydrationPage(),
 
             },
           );
