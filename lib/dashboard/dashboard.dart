@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:aquatrack/dashboard/home.dart';
 import 'package:aquatrack/dashboard/settings.dart';
+import 'package:aquatrack/dashboard/history.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -10,7 +11,7 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  int _page = 0;
+  int _page = 1;
   Color _homeIconColor = Colors.grey;
   Color _historyIconColor = Colors.grey;
   Color _settingsIconColor = Colors.grey;
@@ -22,6 +23,7 @@ class _DashboardPageState extends State<DashboardPage> {
         index: _page,
         children: const [
           HomePage(),
+          HistoryPage()
           SettingsPage(),
         ],
       ),

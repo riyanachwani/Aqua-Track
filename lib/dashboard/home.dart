@@ -10,10 +10,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Image.asset(
-        "assets/images/vc2.jpg",
-        fit: BoxFit.fill,
+    return Scaffold(
+      body: SizedBox.expand(
+        child: Image.asset(
+          "assets/images/vc44.jpg",
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

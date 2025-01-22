@@ -11,5 +11,5 @@ class MyRoutes {
   static String homeRoute = '/home';
   static String waterIntakeInfoRoute = '/waterIntakeInfo';
   static String profileSetupRoute = '/profileSetup';
-
+  static String historyRoute = '/history';
 }
