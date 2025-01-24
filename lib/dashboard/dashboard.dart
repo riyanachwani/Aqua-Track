@@ -68,36 +68,6 @@ class _DashboardPageState extends State<DashboardPage> {
               IconButton(
                 onPressed: () {
                   setState(() {
-                    _page = 1;
-                    _homeIconColor = Colors.grey;
-                    _historyIconColor =
-                        Colors.blue[800]!; // Highlight history icon
-                    _settingsIconColor = Colors.grey;
-                  });
-                },
-                icon: Container(
-                  width: 80,
-                  height: 90,
-                  decoration: BoxDecoration(
-                    color: _historyIconColor == Colors.blue[800]
-                        ? Colors.blue[800]
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.history,
-                      size: 30,
-                      color: _historyIconColor == Colors.blue[800]
-                          ? Colors.white
-                          : Colors.grey,
-                    ),
-                  ),
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  setState(() {
                     _page = 2;
                     _homeIconColor = Colors.grey;
                     _historyIconColor = Colors.grey;

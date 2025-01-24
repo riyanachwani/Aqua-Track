@@ -22,6 +22,8 @@ class WaterIntakeInfoPage extends StatefulWidget {
           .update({
         'targetIntake': newTarget,
         'profileSetupComplete': true,
+        'currentIntake': 0,
+        'currentIntakePercentage': 0,
       });
     }
   }
@@ -50,8 +52,7 @@ class _WaterIntakeInfoPageState extends State<WaterIntakeInfoPage> {
       if (userDoc.exists) {
         setState(() {
           recommendedIntake = userDoc['Recommended Water Intake'] ?? 0;
-          targetIntake =
-              recommendedIntake; // Initialize with recommended intake
+          targetIntake = recommendedIntake;
         });
       } else {
         print("User document not found!");
