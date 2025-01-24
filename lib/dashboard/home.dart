@@ -248,7 +248,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   _buildWaterButton(
                       color: Colors.orange,
-                      iconPath: 'assets/images/drink.png',
+                      iconPath: 'assets/images/water-bottle.png',
                       ml: 250),
                   _buildWaterButton(
                       color: Colors.blue,
@@ -256,7 +256,7 @@ class _HomePageState extends State<HomePage> {
                       ml: 500),
                   _buildWaterButton(
                       color: Colors.red,
-                      iconPath: 'assets/images/gallon.png',
+                      iconPath: 'assets/images/large.png',
                       ml: 1000),
                 ],
               ),
