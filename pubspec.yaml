@@ -48,6 +48,8 @@ dependencies:
   shared_preferences: ^2.3.5
   smooth_page_indicator: ^1.2.0+3
   percent_indicator: ^4.2.4
+  wave: ^0.2.2
+  circle_nav_bar: ^2.2.0
 
 dev_dependencies:
   flutter_test:
