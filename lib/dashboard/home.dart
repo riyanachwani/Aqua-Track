@@ -226,10 +226,10 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
-                      SizedBox(width: 10),
+                      SizedBox(width: 5),
                       InkWell(
                         onTap: () {
                           // Open the modal with the water intake buttons
@@ -237,16 +237,10 @@ class _HomePageState extends State<HomePage> {
                         },
                         child: Container(
                             margin: const EdgeInsets.symmetric(vertical: 10.0),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 10.0),
-                            decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(30),
-                            ),
                             child: Image.asset(
-                              "assets/images/water.png",
-                              height: 40,
-                              width: 40,
+                              "assets/images/plus.png",
+                              height: 50,
+                              width: 50,
                               //color: Colors.white,
                             )),
                       ),
