@@ -49,6 +49,7 @@ dependencies:
   smooth_page_indicator: ^1.2.0+3
   percent_indicator: ^4.2.4
   wave: ^0.2.2
+  intl: ^0.17.0
   circle_nav_bar: ^2.2.0
 
 dev_dependencies:

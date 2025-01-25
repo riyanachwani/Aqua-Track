@@ -1,6 +1,9 @@
+import 'package:aquatrack/dashboard/listview.dart';
+import 'package:aquatrack/models/item.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 import 'package:wave/wave.dart';
 import 'package:wave/config.dart';
 
@@ -47,6 +50,7 @@ class _HomePageState extends State<HomePage> {
   double recommendedIntake = 2000; // Default recommended intake
   int currentIntake = 0; // Current water intake
   int currentIntakePercentage = 0;
+  List<Item> waterRecords = [];
 
   @override
   void initState() {
@@ -60,35 +64,52 @@ class _HomePageState extends State<HomePage> {
     User? user = auth.currentUser;
 
     if (user != null) {
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .get();
+      try {
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
 
-      if (mounted) {
-        if (userDoc.exists) {
-          Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
-          setState(() {
-            recommendedIntake = data['targetIntake'] ?? 2000;
-            currentIntake = data['currentIntake'] ?? 0;
-            currentIntakePercentage = data['currentIntakePercentage'] ?? 0;
+        // Ensure the widget is still mounted before calling setState
+        if (mounted) {
+          if (userDoc.exists) {
+            Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
+            setState(() {
+              recommendedIntake = data['targetIntake'] ?? 2000;
+              currentIntake = data['currentIntake'] ?? 0;
+              currentIntakePercentage = data['currentIntakePercentage'] ?? 0;
 
-            // Check if the 'lastResetTime' field exists
-            if (data.containsKey('lastResetTime')) {
-              Timestamp lastResetTime = data['lastResetTime'];
-              print('Last reset time: $lastResetTime');
-            } else {
-              // Set the current timestamp if 'lastResetTime' does not exist
+              // Check the lastResetTime
+              if (data.containsKey('lastResetTime')) {
+                Timestamp lastResetTime = data['lastResetTime'];
+                DateTime lastResetDate = lastResetTime.toDate();
+                DateTime now = DateTime.now();
+
+                // If it's a new day, reset the water intake
+                if (now.year != lastResetDate.year ||
+                    now.month != lastResetDate.month ||
+                    now.day != lastResetDate.day) {
+                  currentIntake = 0;
+                  currentIntakePercentage = 0;
+                  waterRecords.clear(); // Clear the records for the new day
+
+                  // Update Firestore with the reset data
+                  _updateWaterIntake();
+                }
+              }
+
+              // Update the last reset time to the current time
               FirebaseFirestore.instance.collection('users').doc(user.uid).set(
                 {
                   'lastResetTime': FieldValue.serverTimestamp(),
                 },
                 SetOptions(merge: true),
               );
-              print('No last reset time found, initializing it.');
-            }
-          });
+            });
+          }
         }
+      } catch (e) {
+        print("Error fetching water intake data: $e");
       }
     }
   }
@@ -105,22 +126,19 @@ class _HomePageState extends State<HomePage> {
           .get();
 
       if (!userDoc.exists) {
-        // If the document doesn't exist, create it with necessary fields
         await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
           'targetIntake': recommendedIntake,
           'currentIntake': currentIntake,
           'currentIntakePercentage': currentIntakePercentage,
-          'lastResetTime':
-              FieldValue.serverTimestamp(), // Set the current timestamp
+          'lastResetTime': FieldValue.serverTimestamp(),
         });
       } else {
-        // If document exists, update it
         await FirebaseFirestore.instance.collection('users').doc(user.uid).set(
           {
             'targetIntake': recommendedIntake,
             'currentIntake': currentIntake,
             'currentIntakePercentage': currentIntakePercentage,
-            'lastResetTime': FieldValue.serverTimestamp(), // Update timestamp
+            'lastResetTime': FieldValue.serverTimestamp(),
           },
           SetOptions(merge: true),
         );
@@ -241,11 +259,16 @@ class _HomePageState extends State<HomePage> {
                               "assets/images/plus.png",
                               height: 50,
                               width: 50,
-                              //color: Colors.white,
                             )),
                       ),
                     ],
                   ),
+                ),
+// Display water records
+                Container(
+                  height: 200, // Constrained height for the ListView
+                  child: ItemListView(
+                      items: waterRecords), // Ensure this is the correct data
                 ),
               ],
             ),
@@ -268,7 +291,6 @@ class _HomePageState extends State<HomePage> {
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white, // Modal background color
-                //borderRadius: BorderRadius.circular(20), // For rounded corners
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -329,6 +351,15 @@ class _HomePageState extends State<HomePage> {
             currentIntakePercentage = 100;
           }
         });
+
+        // Get the formatted current time
+        String formattedTime = DateFormat('h:mm a').format(DateTime.now());
+//Added to ListView
+        waterRecords.add(Item(
+          time: formattedTime, // Store the current time as the name
+          image: iconPath,
+          ml: ml.toDouble(), // Convert ml to double as per Item class
+        ));
 
         // Update Firestore with the new intake data
         _updateWaterIntake();
