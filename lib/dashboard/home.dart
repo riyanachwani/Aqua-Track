@@ -11,6 +11,38 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+class WaveClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    // Start from top-left
+    path.lineTo(0, size.height * 0.1);
+
+    // Create the wave
+    path.quadraticBezierTo(
+      size.width * 0.25, size.height * -0.1, // First control point
+      size.width * 0.5, size.height * 0.1, // End of first wave
+    );
+    path.quadraticBezierTo(
+      size.width * 0.75, size.height * 0.3, // Second control point
+      size.width, size.height * 0.1, // End of second wave
+    );
+
+    // Draw down the right side
+    path.lineTo(size.width, size.height);
+
+    // Draw bottom edge
+    path.lineTo(0, size.height);
+
+    // Close the path
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
 class _HomePageState extends State<HomePage> {
   double recommendedIntake = 2000; // Default recommended intake
   int currentIntake = 0; // Current water intake
@@ -184,23 +216,43 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    // Open the modal with the water intake buttons
-                    _openWaterIntakeModal();
-                  },
-                  child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 20.0),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 15.0, horizontal: 30.0),
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(30),
+                const SizedBox(height: 30),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Today\'s Records",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                      child: Icon(Icons.add, size: 40)),
+                      SizedBox(width: 10),
+                      InkWell(
+                        onTap: () {
+                          // Open the modal with the water intake buttons
+                          _openWaterIntakeModal();
+                        },
+                        child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 10.0),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 10.0),
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Image.asset(
+                              "assets/images/water.png",
+                              height: 40,
+                              width: 40,
+                              //color: Colors.white,
+                            )),
+                      ),
+                    ],
+                  ),
                 ),
-
-                const SizedBox(height: 20),
               ],
             ),
           ),
@@ -212,55 +264,56 @@ class _HomePageState extends State<HomePage> {
   void _openWaterIntakeModal() {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // Allow the modal to take more space
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
+      isScrollControlled: true,
+      backgroundColor:
+          Colors.transparent, // Ensures no unwanted background color
       builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Row 1: 2 buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildWaterButton(
-                      color: Colors.green,
-                      iconPath: 'assets/images/water-drop.png',
-                      ml: 100),
-                  _buildWaterButton(
-                      color: Colors.orange,
-                      iconPath: 'assets/images/glass1.png',
-                      ml: 250),
-                  _buildWaterButton(
-                      color: Colors.orange,
-                      iconPath: 'assets/images/bottle.png',
-                      ml: 250),
-                ],
+        return Container(
+          child: ClipPath(
+            clipper: WaveClipper(),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white, // Modal background color
+                //borderRadius: BorderRadius.circular(20), // For rounded corners
               ),
-              const SizedBox(height: 20), // Spacing between rows
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0, vertical: 12.0), // Padding inside modal
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: 40),
+                    // Row 1: Buttons
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _buildWaterButton(
+                            iconPath: 'assets/images/water-drop.png', ml: 100),
+                        _buildWaterButton(
+                            iconPath: 'assets/images/glass1.png', ml: 250),
+                        _buildWaterButton(
+                            iconPath: 'assets/images/bottle.png', ml: 500),
+                      ],
+                    ),
+                    const SizedBox(height: 20), // Spacing between rows
 
-              // Row 2: 2 buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildWaterButton(
-                      color: Colors.orange,
-                      iconPath: 'assets/images/water-bottle.png',
-                      ml: 250),
-                  _buildWaterButton(
-                      color: Colors.blue,
-                      iconPath: 'assets/images/jar.png',
-                      ml: 500),
-                  _buildWaterButton(
-                      color: Colors.red,
-                      iconPath: 'assets/images/large.png',
-                      ml: 1000),
-                ],
+                    // Row 2: Buttons
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _buildWaterButton(
+                            iconPath: 'assets/images/jar.png', ml: 750),
+                        _buildWaterButton(
+                            iconPath: 'assets/images/water-bottle.png',
+                            ml: 1000),
+                        _buildWaterButton(
+                            iconPath: 'assets/images/large.png', ml: 2000),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ],
+            ),
           ),
         );
       },
@@ -268,7 +321,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildWaterButton({
-    required Color color,
+    //required Color color,
     required String iconPath,
     required int ml,
   }) {
