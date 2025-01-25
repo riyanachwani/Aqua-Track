@@ -67,8 +67,7 @@ class _SettingsPageState extends State<SettingsPage> {
               String Name = userData['Name'] ?? 'No Name';
               String Gender = userData['Gender'] ?? 'No Gender';
               int Age = userData['Age'] ?? 'No Age';
-
-
+              double targetIntake = userData['targetIntake'] ?? 0.0;
 
               return SingleChildScrollView(
                 child: Padding(
@@ -110,17 +109,15 @@ class _SettingsPageState extends State<SettingsPage> {
                       _buildListTile(
                         icon: Icons.notifications,
                         title: 'Notifications',
-                        onTap: () {},
                       ),
                       _buildListTile(
                         icon: Icons.water_drop,
                         title: 'Daily Goal',
-                        onTap: () {},
+                        
                       ),
                       _buildListTile(
                         icon: Icons.palette,
                         title: 'Theme',
-                        onTap: () {},
                       ),
                       const Divider(),
 
@@ -128,17 +125,14 @@ class _SettingsPageState extends State<SettingsPage> {
                       _buildListTile(
                         icon: Icons.lock,
                         title: 'Privacy',
-                        onTap: () {},
                       ),
                       _buildListTile(
                         icon: Icons.security,
                         title: 'Security',
-                        onTap: () {},
                       ),
                       _buildListTile(
                         icon: Icons.logout,
                         title: 'Logout',
-                        onTap: () {},
                       ),
                       const Divider(),
 
@@ -146,12 +140,10 @@ class _SettingsPageState extends State<SettingsPage> {
                       _buildListTile(
                         icon: Icons.help_outline,
                         title: 'Help Center',
-                        onTap: () {},
                       ),
                       _buildListTile(
                         icon: Icons.info_outline,
                         title: 'About Us',
-                        onTap: () {},
                       ),
                     ],
                   ),
@@ -181,14 +173,12 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget _buildListTile({
     required IconData icon,
     required String title,
-    required VoidCallback onTap,
   }) {
     return ListTile(
       leading: Icon(icon, color: Colors.blue),
       title: Text(title),
       trailing:
           const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-      onTap: onTap,
     );
   }
 }

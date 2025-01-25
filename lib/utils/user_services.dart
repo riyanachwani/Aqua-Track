@@ -50,8 +50,6 @@ class UserService {
       'targetIntake': userData['targetIntake']?.toDouble() ?? 0.0,
       'currentIntake': userData['currentIntake']?.toDouble() ?? 0.0,
       'currentIntakePercentage': userData['currentIntakePercentage'] ?? 0,
-      'lastResetTime': userData['lastResetTime'] ?? Timestamp.now(),
-      'profileSetupComplete': userData['profileSetupComplete'] ?? false,
     };
   }
 }
