@@ -55,22 +55,22 @@ class MyApp extends StatelessWidget {
               MyRoutes.landingRoute: (context) => const LandingPage(),
               MyRoutes.signupRoute: (context) => const SignupPage(),
               MyRoutes.loginRoute: (context) => const LoginPage(),
-              MyRoutes.dashboardRoute: (context) =>  DashboardPage(),
+              MyRoutes.dashboardRoute: (context) => DashboardPage(),
               MyRoutes.personalInfoRoute: (context) =>
                   PersonalInfoPage(formKey: GlobalKey<FormState>()),
               MyRoutes.sleepScheduleRoute: (context) =>
                   SleepSchedulePage(formKey: GlobalKey<FormState>()),
               MyRoutes.waterIntakeInfoRoute: (context) =>
                   WaterIntakeInfoPage(formKey: GlobalKey<FormState>()),
-              MyRoutes.dashboardRoute: (context) =>  DashboardPage(),
+              MyRoutes.dashboardRoute: (context) => DashboardPage(),
               MyRoutes.profileSetupRoute: (context) => const ProfileSetupPage(),
               MyRoutes.forgotPasswordRoute: (context) =>
                   const ForgotPasswordPage(),
               MyRoutes.homeRoute: (context) => const HomePage(),
               MyRoutes.settingsRoute: (context) => const SettingsPage(),
               MyRoutes.historyRoute: (context) => const HistoryPage(),
-              MyRoutes.currentHydartionRoute: (context) => const CurrentHydrationPage(),
-
+              MyRoutes.currentHydartionRoute: (context) =>
+                  const CurrentHydrationPage(),
             },
           );
         }));

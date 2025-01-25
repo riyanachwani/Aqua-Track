@@ -71,43 +71,48 @@ class _HomePageState extends State<HomePage> {
             .doc(user.uid)
             .get();
 
-        // Ensure the widget is still mounted before calling setState
-        if (mounted) {
-          if (userDoc.exists) {
-            Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
-            setState(() {
-              recommendedIntake = data['targetIntake'] ?? 2000;
-              currentIntake = data['currentIntake'] ?? 0;
-              currentIntakePercentage = data['currentIntakePercentage'] ?? 0;
+        if (mounted && userDoc.exists) {
+          Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
 
-              // Check the lastResetTime
-              if (data.containsKey('lastResetTime')) {
-                Timestamp lastResetTime = data['lastResetTime'];
-                DateTime lastResetDate = lastResetTime.toDate();
-                DateTime now = DateTime.now();
+          // Update state with user data
+          setState(() {
+            recommendedIntake = data['targetIntake'] ?? 2000;
+            currentIntake = data['currentIntake'] ?? 0;
+            currentIntakePercentage = data['currentIntakePercentage'] ?? 0;
+          });
 
-                // If it's a new day, reset the water intake
-                if (now.year != lastResetDate.year ||
-                    now.month != lastResetDate.month ||
-                    now.day != lastResetDate.day) {
-                  currentIntake = 0;
-                  currentIntakePercentage = 0;
-                  waterRecords.clear(); // Clear the records for the new day
+          // Check if it's a new day
+          if (data.containsKey('lastResetTime')) {
+            Timestamp lastResetTime = data['lastResetTime'];
+            DateTime lastResetDate = lastResetTime.toDate();
+            DateTime now = DateTime.now();
 
-                  // Update Firestore with the reset data
-                  _updateWaterIntake();
-                }
-              }
+            // If it's a new day, reset water intake and fetch new records
+            if (now.year != lastResetDate.year ||
+                now.month != lastResetDate.month ||
+                now.day != lastResetDate.day) {
+              setState(() {
+                currentIntake = 0;
+                currentIntakePercentage = 0;
+                waterRecords.clear(); // Clear local records
+              });
 
-              // Update the last reset time to the current time
-              FirebaseFirestore.instance.collection('users').doc(user.uid).set(
-                {
-                  'lastResetTime': FieldValue.serverTimestamp(),
-                },
-                SetOptions(merge: true),
-              );
-            });
+              // Perform Firestore updates and fetch new records
+              await _updateWaterIntake();
+              await _fetchWaterRecords();
+            }
           }
+
+          // Update the last reset time in Firestore
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .set(
+            {
+              'lastResetTime': FieldValue.serverTimestamp(),
+            },
+            SetOptions(merge: true),
+          );
         }
       } catch (e) {
         print("Error fetching water intake data: $e");
@@ -136,8 +141,6 @@ class _HomePageState extends State<HomePage> {
 
         setState(() {
           waterRecords = fetchedRecords;
-
-          // Other state updates as needed
         });
       } catch (e) {
         print("Error fetching water records from Firestore: $e");
@@ -173,6 +176,26 @@ class _HomePageState extends State<HomePage> {
           },
           SetOptions(merge: true),
         );
+      }
+    }
+  }
+
+  void _addWaterRecordToFirestore(Item item) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+
+    if (user != null) {
+      try {
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .collection('waterRecords')
+            .add({
+          ...item.toMap(),
+          'timestamp': FieldValue.serverTimestamp(), // Add timestamp
+        });
+      } catch (e) {
+        print("Error adding water record to Firestore: $e");
       }
     }
   }
@@ -296,10 +319,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 // Display water records
-                Container(
-                  height: 200, // Constrained height for the ListView
-                  child: ItemListView(
-                      items: waterRecords), // Ensure this is the correct data
+                SingleChildScrollView(
+                  child: Container(
+                    height: 300, // Constrained height for the ListView
+                    child: ItemListView(
+                        items: waterRecords), // Ensure this is the correct data
+                  ),
                 ),
               ],
             ),
@@ -365,24 +390,6 @@ class _HomePageState extends State<HomePage> {
         );
       },
     );
-  }
-
-  void _addWaterRecordToFirestore(Item item) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user = auth.currentUser;
-
-    if (user != null) {
-      try {
-        // Add the water record to the user's collection
-        FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
-            .collection('waterRecords') // Nested collection for water records
-            .add(item.toMap());
-      } catch (e) {
-        print("Error adding water record to Firestore: $e");
-      }
-    }
   }
 
   Widget _buildWaterButton({
