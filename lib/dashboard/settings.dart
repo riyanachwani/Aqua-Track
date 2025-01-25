@@ -113,7 +113,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       _buildListTile(
                         icon: Icons.water_drop,
                         title: 'Daily Goal',
-                        
                       ),
                       _buildListTile(
                         icon: Icons.palette,
