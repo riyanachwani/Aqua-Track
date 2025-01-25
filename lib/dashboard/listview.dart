@@ -9,7 +9,7 @@ class ItemListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(18.0),
       child: ListView.builder(
         itemCount: items.length,
         itemBuilder: (context, index) {

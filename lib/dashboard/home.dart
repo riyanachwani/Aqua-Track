@@ -56,6 +56,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _fetchWaterIntake();
+    _fetchWaterRecords();
   }
 
   // Fetch water intake data from Firestore and check for lastResetTime
@@ -110,6 +111,36 @@ class _HomePageState extends State<HomePage> {
         }
       } catch (e) {
         print("Error fetching water intake data: $e");
+      }
+    }
+  }
+
+  Future<void> _fetchWaterRecords() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+
+    if (user != null) {
+      try {
+        // Fetch water records from Firestore
+        QuerySnapshot snapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .collection('waterRecords') // Access the nested collection
+            .orderBy('time', descending: true) // Order by time, if needed
+            .get();
+
+        // Parse the records into a list of Item objects
+        List<Item> fetchedRecords = snapshot.docs
+            .map((doc) => Item.fromMap(doc.data() as Map<String, dynamic>))
+            .toList();
+
+        setState(() {
+          waterRecords = fetchedRecords;
+
+          // Other state updates as needed
+        });
+      } catch (e) {
+        print("Error fetching water records from Firestore: $e");
       }
     }
   }
@@ -336,8 +367,25 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void _addWaterRecordToFirestore(Item item) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+
+    if (user != null) {
+      try {
+        // Add the water record to the user's collection
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .collection('waterRecords') // Nested collection for water records
+            .add(item.toMap());
+      } catch (e) {
+        print("Error adding water record to Firestore: $e");
+      }
+    }
+  }
+
   Widget _buildWaterButton({
-    //required Color color,
     required String iconPath,
     required int ml,
   }) {
@@ -350,16 +398,21 @@ class _HomePageState extends State<HomePage> {
           if (currentIntakePercentage > 100) {
             currentIntakePercentage = 100;
           }
-        });
 
-        // Get the formatted current time
-        String formattedTime = DateFormat('h:mm a').format(DateTime.now());
-//Added to ListView
-        waterRecords.add(Item(
-          time: formattedTime, // Store the current time as the name
-          image: iconPath,
-          ml: ml.toDouble(), // Convert ml to double as per Item class
-        ));
+          // Add the new water record
+          String formattedTime = DateFormat('h:mm a').format(DateTime.now());
+          Item newRecord = Item(
+            time: formattedTime,
+            image: iconPath,
+            ml: ml.toDouble(),
+          );
+
+          // Add to local waterRecords list
+          waterRecords.add(newRecord);
+
+          // Save to Firestore
+          _addWaterRecordToFirestore(newRecord);
+        });
 
         // Update Firestore with the new intake data
         _updateWaterIntake();
@@ -369,14 +422,12 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Use Image.asset for custom icons
           Image.asset(
-            //color: color,
             iconPath,
-            width: 40, // Set width for the image
-            height: 40, // Set height for the image
+            width: 40,
+            height: 40,
           ),
-          const SizedBox(height: 5), // Space between image and ml text
+          const SizedBox(height: 5),
           Text(
             '$ml ml',
             style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
