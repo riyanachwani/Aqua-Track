@@ -13,7 +13,6 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   int _page = 0; // Default to 0 for HomePage
   Color _homeIconColor = Colors.blue[800]!; // Default home icon color
-  Color _historyIconColor = Colors.grey;
   Color _settingsIconColor = Colors.grey;
 
   @override
@@ -27,7 +26,6 @@ class _DashboardPageState extends State<DashboardPage> {
           SettingsPage(),
         ],
       ),
-      extendBody: true,
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 0),
         child: BottomAppBar(
@@ -41,7 +39,6 @@ class _DashboardPageState extends State<DashboardPage> {
                   setState(() {
                     _page = 0;
                     _homeIconColor = Colors.blue[800]!; // Highlight home icon
-                    _historyIconColor = Colors.grey;
                     _settingsIconColor = Colors.grey;
                   });
                 },
@@ -70,7 +67,6 @@ class _DashboardPageState extends State<DashboardPage> {
                   setState(() {
                     _page = 2;
                     _homeIconColor = Colors.grey;
-                    _historyIconColor = Colors.grey;
                     _settingsIconColor =
                         Colors.blue[800]!; // Highlight settings icon
                   });

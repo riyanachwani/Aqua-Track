@@ -205,8 +205,8 @@ class _HomePageState extends State<HomePage> {
     int remainingIntake = (recommendedIntake - currentIntake)
         .toInt(); // Calculate remaining intake
 
-    return Scaffold(
-      body: Container(
+    return SingleChildScrollView(
+      child: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.lightBlueAccent, Colors.white],
