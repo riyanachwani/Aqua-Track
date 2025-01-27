@@ -14,6 +14,34 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   final UserService _userService = UserService();
 
+
+ void _showUpdateDialog(String fieldName, String userId, Function(String) onSave) {
+    TextEditingController controller = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Update $fieldName'),
+        content: TextField(
+          controller: controller,
+          decoration: InputDecoration(hintText: 'Enter new $fieldName'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              await onSave(controller.text);
+              Navigator.pop(context);
+              setState(() {}); // Refresh UI
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<String>(
