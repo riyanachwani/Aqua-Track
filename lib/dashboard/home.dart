@@ -126,12 +126,18 @@ class _HomePageState extends State<HomePage> {
 
     if (user != null) {
       try {
-        // Fetch water records from Firestore
+        DateTime now = DateTime.now();
+        DateTime startOfDay = DateTime(now.year, now.month, now.day);
+        DateTime endOfDay = startOfDay.add(Duration(days: 1));
+
+        // Fetch water records for the current day from Firestore
         QuerySnapshot snapshot = await FirebaseFirestore.instance
             .collection('users')
             .doc(user.uid)
-            .collection('waterRecords') // Access the nested collection
-            .orderBy('time', descending: true) // Order by time, if needed
+            .collection('waterRecords')
+            .where('timestamp', isGreaterThanOrEqualTo: startOfDay)
+            .where('timestamp', isLessThan: endOfDay)
+            .orderBy('timestamp', descending: true)
             .get();
 
         // Parse the records into a list of Item objects
@@ -207,13 +213,6 @@ class _HomePageState extends State<HomePage> {
 
     return SingleChildScrollView(
       child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.lightBlueAccent, Colors.white],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 100),

@@ -5,7 +5,8 @@ import 'package:aquatrack/dashboard/current_hydartion.dart';
 import 'package:aquatrack/dashboard/dashboard.dart';
 import 'package:aquatrack/dashboard/history.dart';
 import 'package:aquatrack/dashboard/home.dart';
-import 'package:aquatrack/dashboard/settings.dart';
+import 'package:aquatrack/dashboard/settings/notifications.dart';
+import 'package:aquatrack/dashboard/settings/settings.dart';
 import 'package:aquatrack/firebase_options.dart';
 import 'package:aquatrack/onboarding/landing.dart';
 import 'package:aquatrack/onboarding/splash_screen.dart';
@@ -71,6 +72,8 @@ class MyApp extends StatelessWidget {
               MyRoutes.historyRoute: (context) => const HistoryPage(),
               MyRoutes.currentHydartionRoute: (context) =>
                   const CurrentHydrationPage(),
+              MyRoutes.notificationRoute: (context) => const NotificationPage(),
+
             },
           );
         }));

@@ -24,7 +24,7 @@ class SleepSchedulePage extends StatefulWidget {
           .update({
         'Wake-up Time':
             '${selectedWakeUpHour.toString().padLeft(2, '0')}:${selectedWakeUpMinute.toString().padLeft(2, '0')}',
-        'Bed Time':
+        'Bedtime':
             '${selectedBedTimeHour.toString().padLeft(2, '0')}:${selectedBedTimeMinute.toString().padLeft(2, '0')}',
       });
       print('User sleep schedule saved');

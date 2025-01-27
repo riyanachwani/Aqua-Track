@@ -23,7 +23,8 @@ class UserService {
   Future<DocumentSnapshot> getUserSettings(String userId) async {
     try {
       // Fetch the user document from Firestore using the user ID
-      DocumentSnapshot userSnapshot = await _firestore.collection('users').doc(userId).get();
+      DocumentSnapshot userSnapshot =
+          await _firestore.collection('users').doc(userId).get();
 
       if (userSnapshot.exists) {
         return userSnapshot; // Return the DocumentSnapshot
@@ -43,7 +44,7 @@ class UserService {
       'Name': userData['Name'] ?? 'No Name',
       'Email': userData['Email'] ?? 'No Email',
       'Age': userData['Age'] ?? 0,
-      'Bed Time': userData['Bed Time'] ?? 'No Time',
+      'Bedtime': userData['Bedtime'] ?? 'No Time',
       'Gender': userData['Gender'] ?? 'Not Specified',
       'Height': userData['Height']?.toDouble() ?? 0.0,
       'Weight': userData['Weight']?.toDouble() ?? 0.0,
@@ -52,4 +53,41 @@ class UserService {
       'currentIntakePercentage': userData['currentIntakePercentage'] ?? 0,
     };
   }
+
+  // Updating Gender
+Future<void> updateGender(String userId, String newGender) async {
+  try {
+    await _firestore.collection('users').doc(userId).update({'Gender': newGender});
+  } catch (e) {
+    throw Exception('Failed to update Gender: $e');
+  }
+}
+
+// Updating Daily Goal
+Future<void> updateDailyGoal(String userId, double newGoal) async {
+  try {
+    await _firestore.collection('users').doc(userId).update({'targetIntake': newGoal});
+  } catch (e) {
+    throw Exception('Failed to update Daily Goal: $e');
+  }
+}
+
+// Updating Wakeup Time
+Future<void> updateWakeupTime(String userId, String wakeupTime) async {
+  try {
+    await _firestore.collection('users').doc(userId).update({'WakeupTime': wakeupTime});
+  } catch (e) {
+    throw Exception('Failed to update Wakeup Time: $e');
+  }
+}
+
+// Updating Bedtime
+Future<void> updateBedtime(String userId, String bedtime) async {
+  try {
+    await _firestore.collection('users').doc(userId).update({'Bedtime': bedtime});
+  } catch (e) {
+    throw Exception('Failed to update Bedtime: $e');
+  }
+}
+
 }

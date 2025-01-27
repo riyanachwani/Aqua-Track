@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:aquatrack/dashboard/home.dart';
-import 'package:aquatrack/dashboard/settings.dart';
+import 'package:aquatrack/dashboard/settings/settings.dart';
 import 'package:aquatrack/dashboard/history.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -18,13 +18,22 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _page, // Dynamically update the page view
-        children: const [
-          HomePage(),
-          HistoryPage(),
-          SettingsPage(),
-        ],
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.lightBlueAccent, Colors.white],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: IndexedStack(
+          index: _page, // Dynamically update the page view
+          children: const [
+            HomePage(),
+            HistoryPage(),
+            SettingsPage(),
+          ],
+        ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 0),

@@ -13,5 +13,6 @@ class MyRoutes {
   static String profileSetupRoute = '/profileSetup';
   static String historyRoute = '/history';
   static String currentHydartionRoute = '/currentHydartion';
+  static String notificationRoute = '/notification';
 
 }
