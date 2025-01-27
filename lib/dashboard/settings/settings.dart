@@ -1,8 +1,11 @@
 import 'dart:developer';
 
+import 'package:aquatrack/main.dart';
+import 'package:aquatrack/utils/routes.dart';
 import 'package:aquatrack/utils/user_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -13,9 +16,8 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   final UserService _userService = UserService();
-
-
- void _showUpdateDialog(String fieldName, String userId, Function(String) onSave) {
+  void _showUpdateDialog(
+      String fieldName, String userId, Function(String) onSave) {
     TextEditingController controller = TextEditingController();
     showDialog(
       context: context,
@@ -42,6 +44,7 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<String>(
@@ -80,10 +83,13 @@ class _SettingsPageState extends State<SettingsPage> {
 
             // Extract the data using the updated function
             var userData = _userService.getUserDataFromSnapshot(snapshot.data!);
-            String Name = userData['Name'] ?? 'No Name';
-            String Gender = userData['Gender'] ?? 'No Gender';
             int Age = userData['Age'] ?? 'No Age';
             double targetIntake = userData['targetIntake'] ?? 0.0;
+
+            String Gender = userData['Gender'];
+            double dailyGoal = userData['targetIntake'];
+            String wakeupTime = userData['WakeupTime'] ?? 'Not Set';
+            String bedtime = userData['Bedtime'] ?? 'Not Set';
 
             return SingleChildScrollView(
               child: Padding(
@@ -95,24 +101,45 @@ class _SettingsPageState extends State<SettingsPage> {
                     // Options Section
                     _buildSectionHeader('Settings'),
                     _buildListTile(
-                        'assets/images/notification.png', 'Notifications', ''),
-                    _buildListTile('assets/images/theme.png', 'Theme', ''),
+                        'assets/images/notification.png', 'Notifications', '',
+                        () {
+                      Navigator.pushNamed(context, MyRoutes.notificationRoute);
+                    }),
+                    _buildListTile('assets/images/theme.png', 'Theme', '', () {
+                      Provider.of<ThemeModel>(context, listen: false)
+                          .toggleTheme();
+                    }),
                     _buildListTile('assets/images/ribbon.png', 'Daily Goal',
-                        '$targetIntake ml'),
+                        '$targetIntake ml', () {}),
                     _buildListTile(
-                        'assets/images/gender.png', 'Gender', '$Gender'),
-                    _buildListTile('assets/images/weight.png', 'Weight', ''),
-                    _buildListTile('assets/images/sun.png', 'Wake-up Time', ''),
+                        'assets/images/gender.png', 'Gender', '$Gender', () {}),
                     _buildListTile(
-                        'assets/images/moon-settings.png', 'Bedtime', ''),
+                        'assets/images/age-group.png', 'Age', '$Age', () {}),
+                    _buildListTile(
+                        'assets/images/weight.png', 'Weight', '', () {}),
+                    _buildListTile(
+                        'assets/images/sun.png', 'Wake-up Time', '', () {}),
+                    _buildListTile('assets/images/moon-settings.png', 'Bedtime',
+                        '', () {}),
                     const Divider(),
                     _buildSectionHeader('Support'),
-                    _buildListTile('assets/images/share.png', 'Share', ''),
-                    _buildListTile('assets/images/review.png', 'Feedback', ''),
+                    _buildListTile('assets/images/share.png', 'Share', '', () {
+                      // Add share functionality here
+                    }),
+                    _buildListTile('assets/images/review.png', 'Feedback', '',
+                        () {
+                      // Add feedback functionality here
+                    }),
                     _buildListTile(
-                        'assets/images/insurance.png', 'Privacy Policy', ''),
+                        'assets/images/insurance.png', 'Privacy Policy', '',
+                        () {
+                      // Add privacy policy functionality here
+                    }),
                     const Divider(),
-                    _buildListTile('assets/images/logout.png', 'Logout', ''),
+                    _buildListTile('assets/images/logout.png', 'Logout', '',
+                        () {
+                      // Add logout functionality here
+                    }),
                   ],
                 ),
               ),
@@ -137,7 +164,8 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildListTile(String imagePath, String title, String value) {
+  Widget _buildListTile(
+      String imagePath, String title, String value, VoidCallback? onTap) {
     return ListTile(
       leading: Image.asset(imagePath, width: 30),
       title: Text(title, style: const TextStyle(fontSize: 16)),
@@ -146,7 +174,16 @@ class _SettingsPageState extends State<SettingsPage> {
               title == 'Feedback' ||
               title == 'Privacy Policy')
           ? const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey)
-          : Text(value, style: const TextStyle(fontSize: 16)),
+          : (title == 'Theme') // Handling the Theme switch case
+              ? Switch(
+                  value:
+                      Provider.of<ThemeModel>(context).mode == ThemeMode.dark,
+                  onChanged: (_) =>
+                      Provider.of<ThemeModel>(context, listen: false)
+                          .toggleTheme(),
+                )
+              : Text(value, style: const TextStyle(fontSize: 16)),
+      onTap: onTap,
     );
   }
 }
