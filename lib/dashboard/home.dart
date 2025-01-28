@@ -1,5 +1,6 @@
 import 'package:aquatrack/dashboard/listview.dart';
 import 'package:aquatrack/models/item.dart';
+import 'package:aquatrack/utils/user_services.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -51,6 +52,8 @@ class _HomePageState extends State<HomePage> {
   int currentIntake = 0; // Current water intake
   int currentIntakePercentage = 0;
   List<Item> waterRecords = [];
+
+  final UserService _userService = UserService();
 
   @override
   void initState() {
@@ -210,6 +213,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     int remainingIntake = (recommendedIntake - currentIntake)
         .toInt(); // Calculate remaining intake
+    final theme = Theme.of(context).brightness;
 
     return SingleChildScrollView(
       child: Container(
@@ -297,14 +301,16 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: theme == Brightness.dark
+                              ? Colors.black
+                              : Colors.white,
                         ),
                       ),
                       SizedBox(width: 5),
                       InkWell(
                         onTap: () {
                           // Open the modal with the water intake buttons
-                          _openWaterIntakeModal();
+                          _openWaterIntakeModal(context);
                         },
                         child: Container(
                             margin: const EdgeInsets.symmetric(vertical: 10.0),
@@ -333,7 +339,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _openWaterIntakeModal() {
+  void _openWaterIntakeModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -345,7 +351,9 @@ class _HomePageState extends State<HomePage> {
             clipper: WaveClipper(),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white, // Modal background color
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.grey[800], // Modal background color
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -359,11 +367,17 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         _buildWaterButton(
-                            iconPath: 'assets/images/water-drop.png', ml: 100),
+                            iconPath: 'assets/images/water-drop.png',
+                            ml: 100,
+                            context: context),
                         _buildWaterButton(
-                            iconPath: 'assets/images/glass1.png', ml: 250),
+                            iconPath: 'assets/images/glass1.png',
+                            ml: 250,
+                            context: context),
                         _buildWaterButton(
-                            iconPath: 'assets/images/bottle.png', ml: 500),
+                            iconPath: 'assets/images/bottle.png',
+                            ml: 500,
+                            context: context),
                       ],
                     ),
                     const SizedBox(height: 20), // Spacing between rows
@@ -373,12 +387,17 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         _buildWaterButton(
-                            iconPath: 'assets/images/jar.png', ml: 750),
+                            iconPath: 'assets/images/jar.png',
+                            ml: 750,
+                            context: context),
                         _buildWaterButton(
                             iconPath: 'assets/images/water-bottle.png',
-                            ml: 1000),
+                            ml: 1000,
+                            context: context),
                         _buildWaterButton(
-                            iconPath: 'assets/images/large.png', ml: 2000),
+                            iconPath: 'assets/images/large.png',
+                            ml: 2000,
+                            context: context),
                       ],
                     ),
                   ],
@@ -394,6 +413,7 @@ class _HomePageState extends State<HomePage> {
   Widget _buildWaterButton({
     required String iconPath,
     required int ml,
+    required BuildContext context,
   }) {
     return GestureDetector(
       onTap: () {
@@ -436,7 +456,12 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 5),
           Text(
             '$ml ml',
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: 14,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.black
+                    : Colors.white,
+                fontWeight: FontWeight.bold),
           ),
         ],
       ),

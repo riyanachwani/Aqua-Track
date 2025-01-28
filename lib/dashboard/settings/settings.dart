@@ -16,6 +16,8 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   final UserService _userService = UserService();
+
+  
   void _showUpdateDialog(
       String fieldName, String userId, Function(String) onSave) {
     TextEditingController controller = TextEditingController();
@@ -83,7 +85,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
             // Extract the data using the updated function
             var userData = _userService.getUserDataFromSnapshot(snapshot.data!);
-            int Age = userData['Age'] ?? 'No Age';
+            int Age = userData['Age'] ?? 0;
             double targetIntake = userData['targetIntake'] ?? 0.0;
 
             String Gender = userData['Gender'];
@@ -105,10 +107,14 @@ class _SettingsPageState extends State<SettingsPage> {
                         () {
                       Navigator.pushNamed(context, MyRoutes.notificationRoute);
                     }),
-                    _buildListTile('assets/images/theme.png', 'Theme', '', () {
-                      Provider.of<ThemeModel>(context, listen: false)
-                          .toggleTheme();
-                    }),
+                    _buildListTile('assets/images/theme.png', 'Theme', '', null,
+                        trailing: Switch(
+                          value: Provider.of<ThemeModel>(context).mode ==
+                              ThemeMode.dark,
+                          onChanged: (_) =>
+                              Provider.of<ThemeModel>(context, listen: false)
+                                  .toggleTheme(),
+                        )),
                     _buildListTile('assets/images/ribbon.png', 'Daily Goal',
                         '$targetIntake ml', () {}),
                     _buildListTile(
@@ -165,24 +171,31 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _buildListTile(
-      String imagePath, String title, String value, VoidCallback? onTap) {
+      String imagePath, String title, String value, VoidCallback? onTap,
+      {Widget? trailing}) {
+    // Assign a default trailing widget if none is provided
+    Widget defaultTrailing;
+
+    if (trailing != null) {
+      defaultTrailing = trailing; // Use the trailing passed as a parameter
+    } else if (['Notifications', 'Share', 'Feedback', 'Privacy Policy']
+        .contains(title)) {
+      defaultTrailing =
+          const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey);
+    } else if (title == 'Theme') {
+      defaultTrailing = Switch(
+        value: Provider.of<ThemeModel>(context).mode == ThemeMode.dark,
+        onChanged: (_) =>
+            Provider.of<ThemeModel>(context, listen: false).toggleTheme(),
+      );
+    } else {
+      defaultTrailing = Text(value, style: const TextStyle(fontSize: 16));
+    }
+
     return ListTile(
       leading: Image.asset(imagePath, width: 30),
       title: Text(title, style: const TextStyle(fontSize: 16)),
-      trailing: (title == 'Notifications' ||
-              title == 'Share' ||
-              title == 'Feedback' ||
-              title == 'Privacy Policy')
-          ? const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey)
-          : (title == 'Theme') // Handling the Theme switch case
-              ? Switch(
-                  value:
-                      Provider.of<ThemeModel>(context).mode == ThemeMode.dark,
-                  onChanged: (_) =>
-                      Provider.of<ThemeModel>(context, listen: false)
-                          .toggleTheme(),
-                )
-              : Text(value, style: const TextStyle(fontSize: 16)),
+      trailing: defaultTrailing,
       onTap: onTap,
     );
   }

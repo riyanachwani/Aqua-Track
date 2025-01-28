@@ -73,7 +73,6 @@ class MyApp extends StatelessWidget {
               MyRoutes.currentHydartionRoute: (context) =>
                   const CurrentHydrationPage(),
               MyRoutes.notificationRoute: (context) => const NotificationPage(),
-
             },
           );
         }));

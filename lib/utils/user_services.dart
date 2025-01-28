@@ -89,5 +89,30 @@ Future<void> updateBedtime(String userId, String bedtime) async {
     throw Exception('Failed to update Bedtime: $e');
   }
 }
+// Updating theme in Firebase
+Future<void> updateTheme(String userId, String theme) async {
+  try {
+    await _firestore.collection('users').doc(userId).update({'theme': theme});
+  } catch (e) {
+    throw Exception('Failed to update theme: $e');
+  }
+}
+
+Future<String> getUserTheme(String userId) async {
+  try {
+    DocumentSnapshot userSnapshot =
+        await _firestore.collection('users').doc(userId).get();
+    if (userSnapshot.exists) {
+      return userSnapshot['theme'] ?? 'light'; // Default to 'light'
+    } else {
+      throw Exception('User not found');
+    }
+  } catch (e) {
+    throw Exception('Failed to fetch theme: $e');
+  }
+}
+
+
+
 
 }
