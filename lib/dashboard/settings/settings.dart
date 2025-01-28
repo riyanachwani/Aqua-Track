@@ -17,7 +17,6 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   final UserService _userService = UserService();
 
-  
   void _showUpdateDialog(
       String fieldName, String userId, Function(String) onSave) {
     TextEditingController controller = TextEditingController();
@@ -49,6 +48,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).brightness;
+
     return FutureBuilder<String>(
       // Fetch the user ID first
       future: _userService.getUserId(),
@@ -106,8 +107,9 @@ class _SettingsPageState extends State<SettingsPage> {
                         'assets/images/notification.png', 'Notifications', '',
                         () {
                       Navigator.pushNamed(context, MyRoutes.notificationRoute);
-                    }),
-                    _buildListTile('assets/images/theme.png', 'Theme', '', null,
+                    }, context),
+                    _buildListTile(
+                        'assets/images/theme.png', 'Theme', '', null, context,
                         trailing: Switch(
                           value: Provider.of<ThemeModel>(context).mode ==
                               ThemeMode.dark,
@@ -116,36 +118,36 @@ class _SettingsPageState extends State<SettingsPage> {
                                   .toggleTheme(),
                         )),
                     _buildListTile('assets/images/ribbon.png', 'Daily Goal',
-                        '$targetIntake ml', () {}),
-                    _buildListTile(
-                        'assets/images/gender.png', 'Gender', '$Gender', () {}),
-                    _buildListTile(
-                        'assets/images/age-group.png', 'Age', '$Age', () {}),
-                    _buildListTile(
-                        'assets/images/weight.png', 'Weight', '', () {}),
-                    _buildListTile(
-                        'assets/images/sun.png', 'Wake-up Time', '', () {}),
+                        '$targetIntake ml', () {}, context),
+                    _buildListTile('assets/images/gender.png', 'Gender',
+                        '$Gender', () {}, context),
+                    _buildListTile('assets/images/age-group.png', 'Age', '$Age',
+                        () {}, context),
+                    _buildListTile('assets/images/weight.png', 'Weight', '',
+                        () {}, context),
+                    _buildListTile('assets/images/sun.png', 'Wake-up Time', '',
+                        () {}, context),
                     _buildListTile('assets/images/moon-settings.png', 'Bedtime',
-                        '', () {}),
+                        '', () {}, context),
                     const Divider(),
                     _buildSectionHeader('Support'),
                     _buildListTile('assets/images/share.png', 'Share', '', () {
                       // Add share functionality here
-                    }),
+                    }, context),
                     _buildListTile('assets/images/review.png', 'Feedback', '',
                         () {
                       // Add feedback functionality here
-                    }),
+                    }, context),
                     _buildListTile(
                         'assets/images/insurance.png', 'Privacy Policy', '',
                         () {
                       // Add privacy policy functionality here
-                    }),
+                    }, context),
                     const Divider(),
                     _buildListTile('assets/images/logout.png', 'Logout', '',
                         () {
                       // Add logout functionality here
-                    }),
+                    }, context),
                   ],
                 ),
               ),
@@ -170,8 +172,8 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildListTile(
-      String imagePath, String title, String value, VoidCallback? onTap,
+  Widget _buildListTile(String imagePath, String title, String value,
+      VoidCallback? onTap, BuildContext context,
       {Widget? trailing}) {
     // Assign a default trailing widget if none is provided
     Widget defaultTrailing;
@@ -187,14 +189,32 @@ class _SettingsPageState extends State<SettingsPage> {
         value: Provider.of<ThemeModel>(context).mode == ThemeMode.dark,
         onChanged: (_) =>
             Provider.of<ThemeModel>(context, listen: false).toggleTheme(),
+        activeColor: Colors.blue[800],
+        inactiveTrackColor: Colors.grey, 
+        inactiveThumbColor:
+            Colors.white, 
       );
     } else {
-      defaultTrailing = Text(value, style: const TextStyle(fontSize: 16));
+      defaultTrailing = Text(value,
+          style: TextStyle(
+              fontSize: 16,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.black
+                  : Colors.white));
     }
 
     return ListTile(
-      leading: Image.asset(imagePath, width: 30),
-      title: Text(title, style: const TextStyle(fontSize: 16)),
+      leading: Image.asset(imagePath,
+          color: Theme.of(context).brightness == Brightness.dark
+              ? Colors.black
+              : Colors.white,
+          width: 30),
+      title: Text(title,
+          style: TextStyle(
+              fontSize: 16,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.black
+                  : Colors.white)),
       trailing: defaultTrailing,
       onTap: onTap,
     );

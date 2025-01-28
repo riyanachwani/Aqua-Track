@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class MyTheme {
   static ThemeData lightTheme(BuildContext context) => ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF87CEEB)),
+      primaryColor: Color(0xFF87CEEB),
+      toggleButtonsTheme: ToggleButtonsThemeData(fillColor: Colors.blue[800]),
       fontFamily: GoogleFonts.arOneSans().fontFamily,
       appBarTheme: AppBarTheme(
         foregroundColor: Colors.black,

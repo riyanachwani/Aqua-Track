@@ -8,6 +8,7 @@ class ItemListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).brightness;
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       itemCount: items.length,
@@ -15,6 +16,7 @@ class ItemListView extends StatelessWidget {
         final item = items[index];
         return Card(
           elevation: 2,
+          color: theme == Brightness.dark ? Colors.white : Colors.black,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -35,16 +37,17 @@ class ItemListView extends StatelessWidget {
             ),
             title: Text(
               item.time,
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
+                color: theme == Brightness.dark ? Colors.black : Colors.white,
               ),
             ),
             trailing: Text(
               "${item.ml} ml",
               textScaleFactor: 1.2,
-              style: const TextStyle(
-                color: Colors.black,
+              style: TextStyle(
+                color: theme == Brightness.dark ? Colors.black : Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
