@@ -44,6 +44,7 @@ class UserService {
       'Name': userData['Name'] ?? 'No Name',
       'Email': userData['Email'] ?? 'No Email',
       'Age': userData['Age'] ?? 0,
+      'Wake-up Time':userData['Wake-up Time']??'Not Set',
       'Bedtime': userData['Bedtime'] ?? 'No Time',
       'Gender': userData['Gender'] ?? 'Not Specified',
       'Height': userData['Height']?.toDouble() ?? 0.0,

@@ -51,6 +51,7 @@ dependencies:
   wave: ^0.2.2
   intl: ^0.17.0
   circle_nav_bar: ^2.2.0
+  fluttertoast: ^8.2.10
 
 dev_dependencies:
   flutter_test:
