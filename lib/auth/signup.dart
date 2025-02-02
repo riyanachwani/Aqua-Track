@@ -151,11 +151,6 @@ static Future<User?> SignInWithEmail(
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   title:
-      //       Text("AquaTrack", style: TextStyle(fontFamily: "RosebayRegular")),
-      // ),
       body: Stack(
         children: [
           Image.asset('assets/images/bg2.jpg',

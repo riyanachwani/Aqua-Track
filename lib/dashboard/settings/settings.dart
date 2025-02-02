@@ -1,3 +1,4 @@
+import 'package:aquatrack/dashboard/settings/utils/share_dialog.dart';
 import 'package:aquatrack/dashboard/settings/utils/update_dialog.dart';
 import 'package:aquatrack/main.dart';
 import 'package:aquatrack/utils/routes.dart';
@@ -6,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -404,7 +406,10 @@ class _SettingsPageState extends State<SettingsPage> {
                       'Share',
                       '',
                       () {
-                        // Add share functionality here
+                        showDialog(
+                          context: context,
+                          builder: (context) => const ShareDialog(),
+                        );
                       },
                       context,
                     ),
