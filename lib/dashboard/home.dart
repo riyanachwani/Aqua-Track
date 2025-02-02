@@ -1,6 +1,5 @@
 import 'package:aquatrack/dashboard/listview.dart';
 import 'package:aquatrack/models/item.dart';
-import 'package:aquatrack/utils/user_services.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -53,7 +52,6 @@ class _HomePageState extends State<HomePage> {
   int currentIntakePercentage = 0;
   List<Item> waterRecords = [];
 
-  final UserService _userService = UserService();
 
   @override
   void initState() {

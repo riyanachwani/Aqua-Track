@@ -59,29 +59,7 @@ class _SignupPageState extends State<SignupPage> {
             ));
   }
 
-  void moveToPersonalInfo(BuildContext context) async {
-    if (_formKey.currentState!.validate()) {
-      try {
-        User? user = await SignInWithEmail(
-          name: _nameController.text,
-          email: _emailController.text,
-          password: _passwordController.text,
-          context: context,
-        );
-        if (user != null) {
-          await _saveLoginStatus(true);
-          Navigator.pushReplacementNamed(context, MyRoutes.profileSetupRoute);
-          print("Is logged in: $_isLoggedIn");
-        } else {
-          _showAlertDialog("Error in Signing up. Try Again");
-        }
-      } catch (e) {
-        log("Error $e");
-      }
-    }
-  }
-
-  static Future<User?> SignInWithEmail(
+static Future<User?> SignInWithEmail(
       {required String name,
       required String email,
       required String password,
@@ -111,6 +89,29 @@ class _SignupPageState extends State<SignupPage> {
     }
   }
 
+  void moveToPersonalInfo(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        User? user = await SignInWithEmail(
+          name: _nameController.text,
+          email: _emailController.text,
+          password: _passwordController.text,
+          context: context,
+        );
+        if (user != null) {
+          await _saveLoginStatus(true);
+          Navigator.pushReplacementNamed(context, MyRoutes.profileSetupRoute);
+          print("Is logged in: $_isLoggedIn");
+        } else {
+          _showAlertDialog("Error in Signing up. Try Again");
+        }
+      } catch (e) {
+        log("Error $e");
+      }
+    }
+  }
+
+  
   Future<void> GoogleRegister() async {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn();

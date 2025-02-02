@@ -1,4 +1,3 @@
-import 'package:aquatrack/utils/user_services.dart';
 import 'package:flutter/material.dart';
 import 'package:aquatrack/dashboard/home.dart';
 import 'package:aquatrack/dashboard/settings/settings.dart';
@@ -16,7 +15,6 @@ class _DashboardPageState extends State<DashboardPage> {
   Color _homeIconColor = Colors.blue[800]!; // Default home icon color
   Color _settingsIconColor = Colors.grey;
 
-  final UserService _userService = UserService();
   @override
   void initState() {
     super.initState();
