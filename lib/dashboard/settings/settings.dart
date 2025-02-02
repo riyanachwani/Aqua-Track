@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:aquatrack/dashboard/settings/utils/update_dialog.dart';
 import 'package:aquatrack/main.dart';
 import 'package:aquatrack/utils/routes.dart';
@@ -7,7 +5,6 @@ import 'package:aquatrack/utils/user_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -64,7 +61,6 @@ class _SettingsPageState extends State<SettingsPage> {
             String wakeupTime = userData['Wake-up Time'] ?? 'Not Set';
             String bedtime = userData['Bedtime'] ?? 'Not Set';
             double weight = userData['Weight'] ?? 0.0;
-            double height = userData['Height'] ?? 0;
 
             return SingleChildScrollView(
               child: Padding(
