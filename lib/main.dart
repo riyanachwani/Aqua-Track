@@ -19,6 +19,7 @@ import 'package:aquatrack/widgets/themes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,12 +27,27 @@ void main() async {
   runApp(const MyApp());
 }
 
+
 class ThemeModel extends ChangeNotifier {
   ThemeMode _mode = ThemeMode.light;
   ThemeMode get mode => _mode;
 
-  void toggleTheme() {
+  ThemeModel() {
+    _loadTheme();
+  }
+
+  _loadTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isDarkMode = prefs.getBool('isDarkMode') ?? false;
+    _mode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    notifyListeners();
+  }
+
+  // Toggle theme and save the new preference
+  void toggleTheme() async {
     _mode = _mode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isDarkMode', _mode == ThemeMode.dark);
     notifyListeners();
   }
 }
